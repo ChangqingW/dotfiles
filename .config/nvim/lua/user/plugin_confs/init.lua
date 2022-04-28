@@ -1,0 +1,5 @@
+--require "user.plugin_confs.cmp" moved to ..
+--require "user.plugin_confs.nvim-tree"
+--require('gitsigns').setup()
+--require("bufferline").setup{}
+--require "user.plugin_confs.toggleterm"
