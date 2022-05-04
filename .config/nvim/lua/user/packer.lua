@@ -56,7 +56,10 @@ return packer.startup(function(use)
   -- statusline
   use {
     "akinsho/bufferline.nvim",
-    config = function () require("bufferline").setup{} end
+    config = function ()
+      vim.opt.showmode = false -- don't show -- INSERT -- etc
+      require("bufferline").setup{}
+    end
   }
   use {
     "akinsho/toggleterm.nvim",
@@ -78,10 +81,32 @@ return packer.startup(function(use)
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   -- LSP
-  use "neovim/nvim-lspconfig" -- enable LSP
+  use {
+    "neovim/nvim-lspconfig", -- enable LSP
+    config = function () vim.opt.signcolumn = "yes" end
+    }
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
-  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  use({
+    "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+    config = function()
+        require("null-ls").setup()
+    end,
+    requires = { "nvim-lua/plenary.nvim" },
+  })
+
+  -- Treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = function () require("user.plugin_confs.treesitter") end
+  }
+  use "JoosepAlviste/nvim-ts-context-commentstring"
+  use "p00f/nvim-ts-rainbow"
+  use {
+    "windwp/nvim-autopairs",
+    config = function () require('user.plugin_confs.autopairs') end
+  }
 
   -- R
   use {"jalvesaq/Nvim-R", branch = 'stable', ft = {'r', 'rmd'}}

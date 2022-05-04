@@ -11,7 +11,7 @@ local formatting = null_ls.builtins.formatting
 null_ls.setup({
 	debug = false,
 	sources = {
-		formatting.autopep8,
+    formatting.autopep8,
     -- diagnostics.flake8
 	},
 })
