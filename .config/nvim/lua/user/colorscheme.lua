@@ -2,7 +2,7 @@ local status_ok, onedark = pcall(require, "onedark")
 if status_ok then
   onedark.setup({
     term_colors = true,
-    transparent = true, -- onedark:282c34 catppuccin:1e1e2e
+    transparent = not vim.g.neovide, -- onedark:282c34 catppuccin:1e1e2e
     style = 'cool',
     code_style = { comments = 'italic,bold' },
     highlights = { Visual = {bg = "#000000"}}

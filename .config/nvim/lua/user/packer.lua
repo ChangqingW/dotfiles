@@ -107,12 +107,15 @@ return packer.startup(function(use)
     "windwp/nvim-autopairs",
     config = function () require('user.plugin_confs.autopairs') end
   }
+  use "simrat39/symbols-outline.nvim"
 
   -- R
   use {"jalvesaq/Nvim-R", branch = 'stable', ft = {'r', 'rmd'}}
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
+
+  use 'ojroques/vim-oscyank'
 
   -- Git
   use {

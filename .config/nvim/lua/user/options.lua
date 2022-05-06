@@ -33,7 +33,7 @@ vim.opt.showmatch = false
 --vim.opt.belloff = "all"
 
 -- misc
-if vim.env.TERM == 'xterm-256color' then
+if vim.env.TERM == 'xterm-256color' or vim.env.TERM == nil then
   vim.opt.termguicolors = true
 elseif vim.env.TERM then
   vim.notify("$TERM: " .. vim.env.TERM .. ", disabling termguicolors")
@@ -44,7 +44,33 @@ end
 
 vim.opt.history = 50
 vim.opt.mouse = "a"
+
+-- clipboard
+-- https://github.com/ojroques/vim-oscyank/issues/24
 vim.opt.clipboard = "unnamedplus"
+local function copy(lines, _)
+  vim.fn.OSCYankString(table.concat(lines, "\n"))
+end
+
+local function paste()
+  return {
+    vim.fn.split(vim.fn.getreg(''), '\n'),
+    vim.fn.getregtype('')
+  }
+end
+
+vim.g.clipboard = {
+  name = "osc52",
+  copy = {
+    ["+"] = copy,
+    ["*"] = copy
+  },
+  paste = {
+    ["+"] = paste,
+    ["*"] = paste
+  }
+}
+
 vim.opt.backspace = {"indent","eol","start"}
 vim.opt.shortmess:append "Ic"
 vim.opt.laststatus = 2 -- no ststus line when only one window
@@ -80,3 +106,9 @@ vim.opt.langremap = false
 vim.opt.modeline = false
 vim.opt.undodir = "~/.vim/tmp/undo"
 vim.opt.scrollback = -1
+
+-- GUI settings
+vim.opt.guifont = "Iosevka Nerd Font:h20"
+vim.g.neovide_fullscreen = false
+vim.g.neovide_transparency=0.8
+vim.g.neovide_input_use_logo=true
