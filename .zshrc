@@ -11,9 +11,10 @@ if  [ -f $HOME/homebrew/bin/brew ]; then
   PATH_VARS_HOMEBREW=$HOME/homebrew
   PATH=$HOME/homebrew/bin:$PATH
   export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
-elif [ -f /usr/local/homebrew/bin/brew ]; then
-  PATH_VARS_HOMEBREW=/usr/local/homebrew
-  PATH=/usr/local/homebrew/bin:$PATH
+elif [ -f /usr/local/Homebrew/bin/brew ]; then
+  #PATH_VARS_HOMEBREW=/usr/local/Homebrew
+  PATH_VARS_HOMEBREW=/usr/local
+  PATH=/usr/local/Homebrew/bin:$PATH
 fi
 
 # VSCode
@@ -52,19 +53,20 @@ setopt AUTO_PUSHD
 setopt extendedglob # use ^ to exlucde
 
 # Syntax highlighting
-if [[ -f ~/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source ~/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -f $PATH_VARS_HOMEBREW/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source $PATH_VARS_HOMEBREW/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 elif [[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#C678DD,bold,underline"  
 
 # Auto-suggestions
-if [[ -f ~/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
-  source ~/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [[ -f $PATH_VARS_HOMEBREW/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source $PATH_VARS_HOMEBREW/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh 
 fi
+#/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Autojump
 if [[ -s $PATH_VARS_HOMEBREW/etc/profile.d/autojump.sh ]]; then
