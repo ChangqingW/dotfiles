@@ -2,30 +2,32 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-[[ -d $HOME/.local/bin ]] && PATH=$HOME/.local/bin/:$PATH
-[[ -d $HOME/bin ]] && PATH=$HOME/bin/:$PATH
+[[ -d $HOME/.local/bin ]] && [[ ! $PATH =~ $HOME/.local/bin ]] && PATH=$HOME/.local/bin/:$PATH
+[[ -d $HOME/bin ]] && [[ ! $PATH =~ $HOME/bin ]] && PATH=$HOME/bin/:$PATH
 
 
 # Add homebrew binaries
 if  [ -f $HOME/homebrew/bin/brew ]; then
   PATH_VARS_HOMEBREW=$HOME/homebrew
-  PATH=$HOME/homebrew/bin:$PATH
+  [[ ! $PATH =~ $HOME/homebrew/bin ]] && PATH=$HOME/homebrew/bin:$PATH
   export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 elif [ -f /usr/local/Homebrew/bin/brew ]; then
   #PATH_VARS_HOMEBREW=/usr/local/Homebrew
   PATH_VARS_HOMEBREW=/usr/local
-  PATH=/usr/local/Homebrew/bin:$PATH
+  [[ ! $PATH =~ /usr/local/Homebrew/bin ]] && PATH=/usr/local/Homebrew/bin:$PATH
 fi
 
 # VSCode
-if [ -f $HOME/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code ]; then
-  PATH=$PATH:$HOME/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
-elif [ -f /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code ]; then
-  PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+if [[ ! $PATH =~ 'Visual Studio Code.app' ]]; then
+  if [ -f $HOME/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code ]; then
+    PATH=$PATH:$HOME/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+  elif [ -f /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code ]; then
+    PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+  fi
 fi
 
 # Colorls
-if type "ruby" > /dev/null; then
+if type "ruby" > /dev/null && [[ ! $PATH =~ $(ruby -e 'puts File.join(Gem.user_dir, "bin")') ]]; then
   PATH=$(ruby -e 'puts File.join(Gem.user_dir, "bin")'):$PATH
 fi
 
@@ -39,7 +41,7 @@ fi
 if type "gsed" > /dev/null; then
   alias sed="gsed"  
 fi
-if type "gsed" > /dev/null; then
+if type "colorls" > /dev/null; then
   alias ls="colorls"
   alias la="colorls -A"
 fi
