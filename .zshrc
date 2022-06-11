@@ -101,7 +101,7 @@ fi
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
   module load git
-  module load R/4.1.3
+  module load R/4.2.0
   module load stornext
   module load htslib/1.9
   module load gcc/11.1.0
@@ -130,6 +130,8 @@ if [ -d $PATH_VARS_CONDA ]; then
 else
   echo "$PATH_VARS_CONDA not found!"
 fi
+
+[ -f $HOME/paths.sh ] && source "${HOME}/paths.sh"
 
 # compinstall: tab selection
 zstyle :compinstall filename '~/.zshrc'

@@ -1,0 +1,15 @@
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+auto_activate_base: false
+{% if yadm.hostname == "slurm-login01" %}
+envs_dirs:
+  - {{ env.LHOME }}/conda_envs
+  - {{ env.HOME }}/.conda/envs
+{% endif %}
+{% if yadm.hostname == "slurm-login02" %}
+envs_dirs:
+  - {{ env.LHOME }}/conda_envs
+  - {{ env.HOME }}/.conda/envs
+{% endif %}
