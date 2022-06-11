@@ -109,6 +109,16 @@ return packer.startup(function(use)
   }
   use "simrat39/symbols-outline.nvim"
 
+  -- Markdown Preview
+  if vim.fn.executable('npm') == 1 then
+    use({
+      "iamcco/markdown-preview.nvim",
+      run = "cd app && npm install",
+      setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+      ft = { "markdown" },
+    })
+  end
+
   -- R
   use {"jalvesaq/Nvim-R", branch = 'stable', ft = {'r', 'rmd'}}
 
