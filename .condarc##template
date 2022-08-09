@@ -5,11 +5,17 @@ channels:
 auto_activate_base: false
 {% if yadm.hostname == "slurm-login01" %}
 envs_dirs:
-  - {{ env.LHOME }}/conda_envs
+  - {{ env.SHOME }}/conda_dir/envs
   - {{ env.HOME }}/.conda/envs
+pkgs_dirs:
+  - {{ env.SHOME }}/conda_dir/pkgs
+  - {{ env.HOME }}/.conda/pkgs
 {% endif %}
 {% if yadm.hostname == "slurm-login02" %}
 envs_dirs:
-  - {{ env.LHOME }}/conda_envs
+  - {{ env.SHOME }}/conda_dir/envs
   - {{ env.HOME }}/.conda/envs
+pkgs_dirs:
+  - {{ env.SHOME }}/conda_dir/pkgs
+  - {{ env.HOME }}/.conda/pkgs
 {% endif %}

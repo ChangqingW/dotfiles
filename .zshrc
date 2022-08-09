@@ -5,6 +5,8 @@ fi
 [[ -d $HOME/.local/bin ]] && [[ ! $PATH =~ $HOME/.local/bin ]] && PATH=$HOME/.local/bin/:$PATH
 [[ -d $HOME/bin ]] && [[ ! $PATH =~ $HOME/bin ]] && PATH=$HOME/bin/:$PATH
 
+# VSCode falsely adding conda to end of PATH
+# https://github.com/microsoft/vscode/issues/129979
 
 # Add homebrew binaries
 if  [ -f $HOME/homebrew/bin/brew ]; then
@@ -132,6 +134,16 @@ else
 fi
 
 [ -f $HOME/paths.sh ] && source "${HOME}/paths.sh"
+
+# redirect tmp dirs
+# need a vast scrach folder
+if [[ "$HOSTNAME" =~ "hpc.wehi.edu.au" ]]; then
+  export TMPDIR=/vast/scratch/users/$USER/tmp
+  export SINGULARITY_TMPDIR=/vast/scratch/users/$USER/singularity_tmp
+  export SINGULARITY_CACHEDIR=/vast/scratch/users/$USER/singularity_tmp
+  [[ ! -d $TMPDIR ]] && mkdir -p $TMPDIR
+  [[ ! -d $SINGULARITY_TMPDIR ]] && mkdir -p $SINGULARITY_TMPDIR
+fi 
 
 # compinstall: tab selection
 zstyle :compinstall filename '~/.zshrc'
