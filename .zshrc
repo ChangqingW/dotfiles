@@ -49,6 +49,7 @@ if type "colorls" > /dev/null; then
 fi
 alias r="radian"
 alias vim="nvim"
+alias copy="head -c -1 | xclip -sel clip"
 alias msg="python3 ~/Documents/wx_bot/msg.py"
 alias syncbib="rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib dropbox: -P; sed 's/date/year/g; s/journaltitle/journal/g;' ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib > ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib; rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib dropbox: -P --no-update-modtime"
 export EDITOR="nvim"
@@ -103,7 +104,7 @@ fi
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
   module load git
-  module load R/4.2.0
+  module load R/4.2.1
   module load stornext
   module load htslib/1.9
   module load gcc/11.1.0
@@ -135,14 +136,17 @@ fi
 
 [ -f $HOME/paths.sh ] && source "${HOME}/paths.sh"
 
-# redirect tmp dirs
-# need a vast scrach folder
 if [[ "$HOSTNAME" =~ "hpc.wehi.edu.au" ]]; then
-  export TMPDIR=/vast/scratch/users/$USER/tmp
+  # redirect tmp dirs
+  export TMPDIR=$(mktemp -d -p /vast/scratch/users/$USER)
+  #export TMPDIR=/vast/scratch/users/$USER/tmp
   export SINGULARITY_TMPDIR=/vast/scratch/users/$USER/singularity_tmp
   export SINGULARITY_CACHEDIR=/vast/scratch/users/$USER/singularity_tmp
-  [[ ! -d $TMPDIR ]] && mkdir -p $TMPDIR
+  #[[ ! -d $TMPDIR ]] && mkdir -p $TMPDIR
   [[ ! -d $SINGULARITY_TMPDIR ]] && mkdir -p $SINGULARITY_TMPDIR
+
+  # my_base
+  conda activate my_base
 fi 
 
 # compinstall: tab selection
