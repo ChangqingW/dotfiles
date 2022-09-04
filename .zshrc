@@ -78,11 +78,13 @@ if [[ -s $PATH_VARS_HOMEBREW/etc/profile.d/autojump.sh ]]; then
   source $PATH_VARS_HOMEBREW/etc/profile.d/autojump.sh
 elif [[ -s ~/.zsh/.autojump/etc/profile.d/autojump.sh ]]; then
   source ~/.zsh/.autojump/etc/profile.d/autojump.sh
+elif [[ -s /usr/share/autojump/autojump.sh ]]; then
+  source /usr/share/autojump/autojump.sh
 fi
 
 # zsh-vi-mode
-if [ -f ~/.zsh-vi-mode/zsh-vi-mode.plugin.zsh ]; then
-  source  ~/.zsh-vi-mode/zsh-vi-mode.plugin.zsh
+if [ -f ~/.zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]; then
+  source ~/.zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 elif [ -f $PATH_VARS_HOMEBREW/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]; then
   source $PATH_VARS_HOMEBREW/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 fi

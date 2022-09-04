@@ -12,6 +12,7 @@ null_ls.setup({
 	debug = false,
 	sources = {
 		formatting.autopep8,
+    formatting.google_java_format,
     -- diagnostics.flake8
 	},
 })

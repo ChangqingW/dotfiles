@@ -48,6 +48,7 @@ vim.api.nvim_set_keymap("n", "<C-s>", ":SymbolsOutline<CR>", opts)
 
 vim.api.nvim_set_keymap("v", "<C-s>", ":ToggleTermSendVisualSelectionNoTrim<CR>", opts)
 
+vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 --local customNvimRMappings =function ()
 --  vim.api.nvim_buf_set_keymap(0, "i", "<Leader>sr", "<Plug>RStart", opts)
 --  vim.api.nvim_buf_set_keymap(0, "v", "<Leader>sr", "<Plug>RStart", opts)
