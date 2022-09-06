@@ -52,6 +52,14 @@ alias vim="nvim"
 alias copy="head -c -1 | xclip -sel clip"
 alias msg="python3 ~/Documents/wx_bot/msg.py"
 alias syncbib="rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib dropbox: -P; sed 's/date/year/g; s/journaltitle/journal/g;' ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib > ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib; rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib dropbox: -P --no-update-modtime"
+
+function preexec {
+  if [ -n "$TMUX" ] && [ -n "$(tmux show-environment | grep '^DISPLAY')" ]; then
+    #export $(tmux show-environment | grep "^SSH_AUTH_SOCK")
+    export $(tmux show-environment | grep "^DISPLAY")
+  fi
+}
+
 export EDITOR="nvim"
 
 setopt AUTO_PUSHD

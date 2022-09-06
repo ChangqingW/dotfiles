@@ -23,7 +23,7 @@ end
 -- navigate buffers
 vim.api.nvim_set_keymap("n", "<A-n>", ":bp<CR>", opts)
 vim.api.nvim_set_keymap("n", "<A-m>", ":bn<CR>", opts)
-vim.api.nvim_set_keymap("n", "<A-b>", ":bd<CR>", opts)
+vim.api.nvim_set_keymap("n", "<A-x>", ":bd<CR>", opts)
 
 -- Emacs keymaps
 vim.api.nvim_set_keymap("i", "<C-e>", "<END>", opts)
@@ -41,7 +41,7 @@ vim.api.nvim_set_keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 vim.api.nvim_set_keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 vim.api.nvim_set_keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
-vim.api.nvim_set_keymap("n", "<C-b>", ":NvimTreeToggle<CR>", opts)
+vim.api.nvim_set_keymap("n", "<A-b>", ":NvimTreeToggle<CR>", opts)
 vim.api.nvim_set_keymap("n", "<C-f>", ":Telescope find_files<CR>", opts)
 vim.api.nvim_set_keymap("n", "<C-g>", ":Telescope live_grep<CR>", opts)
 vim.api.nvim_set_keymap("n", "<C-s>", ":SymbolsOutline<CR>", opts)

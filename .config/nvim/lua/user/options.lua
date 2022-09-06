@@ -1,7 +1,7 @@
 -- CJK settings
-vim.opt.fileencodings = {"utf-8","ucs-bom","gb18030","gbk","gb2312","cp936"}
+vim.opt.fileencodings = { "utf-8", "ucs-bom", "gb18030", "gbk", "gb2312", "cp936" }
 vim.opt.encoding = "utf-8"
-vim.opt.spelllang = {"en","cjk"}
+vim.opt.spelllang = { "en", "cjk" }
 
 -- line numbers
 vim.opt.number = true
@@ -15,7 +15,7 @@ vim.opt.tabstop = 2
 vim.opt.compatible = false
 vim.opt.fileformat = "unix"
 
-vim.opt.shiftwidth = 2  -- Number of spaces for indentation
+vim.opt.shiftwidth = 2 -- Number of spaces for indentation
 vim.opt.autoindent = true
 vim.opt.smarttab = true
 
@@ -48,15 +48,40 @@ vim.opt.mouse = "a"
 -- clipboard
 -- https://github.com/ojroques/vim-oscyank/issues/24
 vim.opt.clipboard = "unnamedplus"
-local function copy(lines, _)
-  vim.fn.OSCYankString(table.concat(lines, "\n"))
+
+
+local copy
+if vim.env.TMUX ~= nil and vim.env.HOSTNAME ~= nil and string.find(vim.env.HOSTNAME, "hpc.wehi.edu.au") ~= nil then
+  copy = function(lines, _)
+    local xclip = io.popen("xclip -sel clip", "w")
+    if xclip ~= nil then
+      xclip:write(table.concat(lines, "\n"))
+      xclip:close()
+    end
+  end
+else
+  copy = function(lines, _)
+    vim.fn.OSCYankString(table.concat(lines, "\n"))
+  end
 end
 
-local function paste()
-  return {
-    vim.fn.split(vim.fn.getreg(''), '\n'),
-    vim.fn.getregtype('')
-  }
+local paste
+if vim.env.DISPLAY ~= nil then
+  paste = function()
+    local xclip = io.popen("xclip -o -sel clip", "r")
+    if xclip ~= nil then
+      local result = xclip:read("a")
+      xclip:close()
+      return { vim.fn.split(result, '\n'), 'b' }
+    end
+  end
+else
+  paste = function()
+    return {
+      vim.fn.split(vim.fn.getreg(''), '\n'),
+      vim.fn.getregtype('')
+    }
+  end
 end
 
 vim.g.clipboard = {
@@ -71,7 +96,7 @@ vim.g.clipboard = {
   }
 }
 
-vim.opt.backspace = {"indent","eol","start"}
+vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.shortmess:append "Ic"
 vim.opt.laststatus = 2 -- no ststus line when only one window
 vim.opt.swapfile = false -- big files
@@ -94,8 +119,8 @@ vim.opt.joinspaces = false
 --vim.opt.sidescroll = 1
 vim.opt.sidescrolloff = 3
 vim.opt.wildignorecase = true
-vim.opt.wildignore = {".DS_Store",".localized",".tags*","tags",".keep",".gitkeep","*.pyc","*.class","*.swp","*.dump"}
-vim.opt.diffopt = {"vertical","filler","foldcolumn:0", "followwrap"}
+vim.opt.wildignore = { ".DS_Store", ".localized", ".tags*", "tags", ".keep", ".gitkeep", "*.pyc", "*.class", "*.swp", "*.dump" }
+vim.opt.diffopt = { "vertical", "filler", "foldcolumn:0", "followwrap" }
 vim.opt.whichwrap = "b,s"
 vim.opt.wrap = true
 vim.opt.synmaxcol = 1000
@@ -111,5 +136,5 @@ vim.opt.scrollback = -1
 -- GUI settings
 vim.opt.guifont = "Iosevka Nerd Font:h20"
 vim.g.neovide_fullscreen = false
-vim.g.neovide_transparency=0.8
-vim.g.neovide_input_use_logo=true
+vim.g.neovide_transparency = 0.8
+vim.g.neovide_input_use_logo = true
