@@ -2,10 +2,10 @@ local status_ok, onedark = pcall(require, "onedark")
 if status_ok then
   onedark.setup({
     term_colors = true,
-    transparent = not vim.g.neovide, -- onedark:282c34 catppuccin:1e1e2e
+    transparent = true, -- onedark:282c34 catppuccin:1e1e2e
     style = 'cool',
     code_style = { comments = 'italic,bold' },
-    highlights = { Visual = {bg = "#000000"}}
+    highlights = { Visual = {bg = "#000001"}}
   })
   onedark.load()
   require('lualine').setup { -- assumed lualine exists

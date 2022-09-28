@@ -11,7 +11,6 @@ if vim.g.neovide or next(vim.api.nvim_list_uis()) ~= nil then
   vim.api.nvim_set_keymap("v", "<D-v>", '+p<CR>', opts)
   vim.api.nvim_set_keymap('!', '<D-v>', '<C-r>+', { noremap = true, silent = false })
   vim.api.nvim_set_keymap('t', '<D-v>', '<C-r>+', opts)
-  vim.api.nvim_set_keymap("n", '<D-=>', ":set guifont=Iosevka\\ Nerd\\ Font:h", { noremap = true, silent = false })
   vim.api.nvim_set_keymap("n", "<D-->", ":let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", opts)
   --https://github.com/neovide/neovide/issues/1046
   vim.api.nvim_set_keymap("n", "~", ":bp<CR>", opts)

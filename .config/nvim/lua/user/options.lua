@@ -66,7 +66,7 @@ else
 end
 
 local paste
-if vim.env.DISPLAY ~= nil then
+if vim.env.SSH_CLIENT ~= nil then
   paste = function()
     local xclip = io.popen("xclip -o -sel clip", "r")
     if xclip ~= nil then
@@ -84,17 +84,19 @@ else
   end
 end
 
-vim.g.clipboard = {
-  name = "osc52",
-  copy = {
-    ["+"] = copy,
-    ["*"] = copy
-  },
-  paste = {
-    ["+"] = paste,
-    ["*"] = paste
+if not vim.g.neovide then
+  vim.g.clipboard = {
+    name = "osc52",
+    copy = {
+      ["+"] = copy,
+      ["*"] = copy
+    },
+    paste = {
+      ["+"] = paste,
+      ["*"] = paste
+    }
   }
-}
+end
 
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.shortmess:append "Ic"
@@ -119,7 +121,8 @@ vim.opt.joinspaces = false
 --vim.opt.sidescroll = 1
 vim.opt.sidescrolloff = 3
 vim.opt.wildignorecase = true
-vim.opt.wildignore = { ".DS_Store", ".localized", ".tags*", "tags", ".keep", ".gitkeep", "*.pyc", "*.class", "*.swp", "*.dump" }
+vim.opt.wildignore = { ".DS_Store", ".localized", ".tags*", "tags", ".keep", ".gitkeep", "*.pyc", "*.class", "*.swp",
+  "*.dump" }
 vim.opt.diffopt = { "vertical", "filler", "foldcolumn:0", "followwrap" }
 vim.opt.whichwrap = "b,s"
 vim.opt.wrap = true
@@ -135,6 +138,11 @@ vim.opt.scrollback = -1
 
 -- GUI settings
 vim.opt.guifont = "Iosevka Nerd Font:h20"
-vim.g.neovide_fullscreen = false
-vim.g.neovide_transparency = 0.8
-vim.g.neovide_input_use_logo = true
+if vim.g.neovide then
+  vim.g.neovide_fullscreen = false
+  vim.g.neovide_transparency = 0.0
+  vim.g.transparency = 0.95
+  vim.g.neovide_background_color = '#282c34' .. string.format("%x", 255 * vim.g.transparency)
+  vim.g.neovide_input_use_logo = true
+  vim.g.neovide_input_macos_alt_is_meta = true
+end

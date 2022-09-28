@@ -7,12 +7,12 @@ end
 
 nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
   auto_reload_on_write = true,
-  disable_netrw = false,
+  disable_netrw = true,
   hijack_cursor = false,
   hijack_netrw = true,
   hijack_unnamed_buffer_when_opening = false,
   ignore_buffer_on_setup = false,
-  open_on_setup = false,
+  open_on_setup = true,
   open_on_setup_file = false,
   open_on_tab = false,
   sort_by = "name",
@@ -91,7 +91,7 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
   },
   filters = {
     dotfiles = false,
-    custom = {},
+    custom = { ".git$" },
     exclude = {},
   },
   git = {
@@ -108,7 +108,7 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
     },
     open_file = {
       quit_on_open = false,
-      resize_window = false,
+      resize_window = true,
       window_picker = {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
