@@ -117,7 +117,12 @@ return packer.startup(function(use)
   end
 
   -- R
-  use {"jalvesaq/Nvim-R", branch = 'stable', ft = {'r', 'rmd'}}
+  use {
+    "jalvesaq/Nvim-R",
+    branch = 'stable',
+    ft = {'r', 'rmd'},
+    config = function () require("user.plugin_confs.nvim-r") end
+  }
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
