@@ -84,7 +84,7 @@ else
   end
 end
 
-if not vim.g.neovide then
+if not vim.g.neovide and vim.env.TMUX == nil then
   vim.g.clipboard = {
     name = "osc52",
     copy = {

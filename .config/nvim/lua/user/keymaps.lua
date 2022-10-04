@@ -47,7 +47,15 @@ vim.api.nvim_set_keymap("n", "<C-s>", ":SymbolsOutline<CR>", opts)
 
 vim.api.nvim_set_keymap("v", "<C-s>", ":ToggleTermSendVisualSelectionNoTrim<CR>", opts)
 
-vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
+vim.cmd [[ command! Format execute 'lua Format_wrapper()' ]]
+function Format_wrapper()
+  for _,val in pairs(vim.lsp.get_active_clients()) do
+    if val["server_capabilities"]["documentFormattingProvider"] then
+      return vim.lsp.buf.formatting()
+    end
+  end
+  print("No active formatters")
+end
 --local customNvimRMappings =function ()
 --  vim.api.nvim_buf_set_keymap(0, "i", "<Leader>sr", "<Plug>RStart", opts)
 --  vim.api.nvim_buf_set_keymap(0, "v", "<Leader>sr", "<Plug>RStart", opts)
