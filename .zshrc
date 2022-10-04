@@ -19,6 +19,10 @@ elif [ -f /usr/local/Homebrew/bin/brew ]; then
   [[ ! $PATH =~ /usr/local/Homebrew/bin ]] && PATH=/usr/local/Homebrew/bin:$PATH
 fi
 
+if [[ -d $PATH_VARS_HOMEBREW/opt/grep/libexec/gnubin ]]; then
+  PATH=$PATH_VARS_HOMEBREW/opt/grep/libexec/gnubin:$PATH
+fi
+
 # VSCode
 if [[ ! $PATH =~ 'Visual Studio Code.app' ]]; then
   if [ -f $HOME/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code ]; then
@@ -93,8 +97,6 @@ fi
 # zsh-vi-mode
 if [ -f ~/.zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]; then
   source ~/.zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-elif [ -f $PATH_VARS_HOMEBREW/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]; then
-  source $PATH_VARS_HOMEBREW/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 fi
 
 # iterm2
