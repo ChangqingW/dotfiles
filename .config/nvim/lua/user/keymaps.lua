@@ -5,24 +5,10 @@ vim.api.nvim_set_keymap("n", "s", '"_s', opts)
 vim.api.nvim_set_keymap("v", "s", '"_s', opts)
 vim.api.nvim_set_keymap("v", "p", '"_dP', opts)
 
-if vim.g.neovide or next(vim.api.nvim_list_uis()) ~= nil then
-  --vim.api.nvim_set_keymap("v", "y", ':OSCYank<CR>', opts)
-  vim.api.nvim_set_keymap("", "<D-v>", '+p<CR>', opts)
-  vim.api.nvim_set_keymap("v", "<D-v>", '+p<CR>', opts)
-  vim.api.nvim_set_keymap('!', '<D-v>', '<C-r>+', { noremap = true, silent = false })
-  vim.api.nvim_set_keymap('t', '<D-v>', '<C-r>+', opts)
-  vim.api.nvim_set_keymap("n", "<D-->", ":let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", opts)
-  --https://github.com/neovide/neovide/issues/1046
-  vim.api.nvim_set_keymap("n", "~", ":bp<CR>", opts)
-  vim.api.nvim_set_keymap("n", "ñ", ":bp<CR>", opts)
-  vim.api.nvim_set_keymap("n", "µ", ":bn<CR>", opts)
-  vim.api.nvim_set_keymap("n", "∫", ":bd<CR>", opts)
-end
-
 -- navigate buffers
-vim.api.nvim_set_keymap("n", "<A-n>", ":bp<CR>", opts)
-vim.api.nvim_set_keymap("n", "<A-m>", ":bn<CR>", opts)
-vim.api.nvim_set_keymap("n", "<A-x>", ":bd<CR>", opts)
+vim.api.nvim_set_keymap("n", "<A-p>", ":bp<CR>", opts)
+vim.api.nvim_set_keymap("n", "<A-n>", ":bn<CR>", opts)
+vim.api.nvim_set_keymap("n", "<A-x>", ":BufDel<CR>", opts)
 
 -- Emacs keymaps
 vim.api.nvim_set_keymap("i", "<C-e>", "<END>", opts)
@@ -47,6 +33,7 @@ vim.api.nvim_set_keymap("n", "<C-s>", ":SymbolsOutline<CR>", opts)
 
 vim.api.nvim_set_keymap("v", "<C-s>", ":ToggleTermSendVisualSelectionNoTrim<CR>", opts)
 
+-- lsp fomratting
 vim.cmd [[ command! Format execute 'lua Format_wrapper()' ]]
 function Format_wrapper()
   for _,val in pairs(vim.lsp.get_active_clients()) do
@@ -57,6 +44,7 @@ function Format_wrapper()
   print("No active formatters")
 end
 
+-- swith vim/tmux panes
 function TmuxMove(direction)
   local windowid = vim.api.nvim_get_current_win()
   vim.cmd("wincmd " .. direction)

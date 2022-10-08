@@ -48,24 +48,24 @@ return packer.startup(function(use)
   -- UI
   -- colorscheme
   -- use({"catppuccin/nvim", as = "catppuccin"})
+  use 'kyazdani42/nvim-web-devicons'
   use 'navarasu/onedark.nvim'
   use {
   'nvim-lualine/lualine.nvim',
-  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
+
   -- statusline
   use {
     "akinsho/bufferline.nvim",
-    config = function ()
-      vim.opt.showmode = false -- don't show -- INSERT -- etc
-      require("bufferline").setup{}
-    end
+    config = function () require("user.plugin_confs.bufferline") end
   }
+
   use {
     "akinsho/toggleterm.nvim",
     config = function () require("user.plugin_confs.toggleterm") end
   }
 
+  use {'ojroques/nvim-bufdel'}
 
   -- cmp plugins: require snippet plugin (use LuaSnip)
   use "hrsh7th/nvim-cmp" -- The completion plugin
