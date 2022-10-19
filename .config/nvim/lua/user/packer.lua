@@ -65,7 +65,9 @@ return packer.startup(function(use)
     config = function () require("user.plugin_confs.toggleterm") end
   }
 
-  use {'ojroques/nvim-bufdel'}
+  use {'ojroques/nvim-bufdel',
+    config = function () require('bufdel').setup{ quit = false } end
+  }
 
   -- cmp plugins: require snippet plugin (use LuaSnip)
   use "hrsh7th/nvim-cmp" -- The completion plugin

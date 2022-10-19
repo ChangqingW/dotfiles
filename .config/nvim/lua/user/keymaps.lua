@@ -45,17 +45,17 @@ function Format_wrapper()
 end
 
 -- swith vim/tmux panes
-function TmuxMove(direction)
+function TmuxMove(direction, tmuxParam)
   local windowid = vim.api.nvim_get_current_win()
   vim.cmd("wincmd " .. direction)
   if windowid == vim.api.nvim_get_current_win() then
-    os.execute("tmux select-pane -" .. string.upper(direction))
+    os.execute("tmux select-pane -" .. string.upper(tmuxParam))
   end
 end
-vim.api.nvim_set_keymap("n", "<C-w>h", ":lua TmuxMove('h')<CR>", opts)
-vim.api.nvim_set_keymap("n", "<C-w>j", ":lua TmuxMove('j')<CR>", opts)
-vim.api.nvim_set_keymap("n", "<C-w>k", ":lua TmuxMove('k')<CR>", opts)
-vim.api.nvim_set_keymap("n", "<C-w>l", ":lua TmuxMove('l')<CR>", opts)
+vim.api.nvim_set_keymap("n", "<C-w>h", ":lua TmuxMove('h','L')<CR>", opts)
+vim.api.nvim_set_keymap("n", "<C-w>j", ":lua TmuxMove('j','D')<CR>", opts)
+vim.api.nvim_set_keymap("n", "<C-w>k", ":lua TmuxMove('k','U')<CR>", opts)
+vim.api.nvim_set_keymap("n", "<C-w>l", ":lua TmuxMove('l','R')<CR>", opts)
 
 --local customNvimRMappings =function ()
 --  vim.api.nvim_buf_set_keymap(0, "i", "<Leader>sr", "<Plug>RStart", opts)

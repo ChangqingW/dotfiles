@@ -118,9 +118,9 @@ if [ -f /etc/profile.d/modules.sh ]; then
   module load git
   module load R/4.2.1
   module load stornext
-  module load htslib/1.9
-  module load gcc/11.1.0
-  PATH_VARS_CONDA='/stornext/System/data/apps/anaconda3/anaconda3-2019.03'
+  module load htslib
+  module load gcc/11.2.0
+  PATH_VARS_CONDA='/stornext/System/data/apps/anaconda3/anaconda3-latest'
 elif [ -d $HOME/opt/anaconda3 ]; then
   PATH_VARS_CONDA=$HOME/opt/anaconda3
 elif [ -d "/opt/anaconda3" ]; then
@@ -149,14 +149,6 @@ fi
 [ -f $HOME/paths.sh ] && source "${HOME}/paths.sh"
 
 if [[ "$HOSTNAME" =~ "hpc.wehi.edu.au" ]]; then
-  # redirect tmp dirs
-  export TMPDIR=$(mktemp -d -p /vast/scratch/users/$USER)
-  #export TMPDIR=/vast/scratch/users/$USER/tmp
-  export SINGULARITY_TMPDIR=/vast/scratch/users/$USER/singularity_tmp
-  export SINGULARITY_CACHEDIR=/vast/scratch/users/$USER/singularity_tmp
-  #[[ ! -d $TMPDIR ]] && mkdir -p $TMPDIR
-  [[ ! -d $SINGULARITY_TMPDIR ]] && mkdir -p $SINGULARITY_TMPDIR
-
   # my_base
   conda activate my_base
 fi 
