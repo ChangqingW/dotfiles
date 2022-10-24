@@ -52,9 +52,9 @@ return packer.startup(function(use)
   use 'navarasu/onedark.nvim'
   use {
   'nvim-lualine/lualine.nvim',
-  }
+  } -- status line
 
-  -- statusline
+  -- buffer tabs
   use {
     "akinsho/bufferline.nvim",
     config = function () require("user.plugin_confs.bufferline") end
