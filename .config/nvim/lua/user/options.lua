@@ -40,33 +40,22 @@ vim.opt.mouse = "a"
 -- https://github.com/ojroques/vim-oscyank/issues/24
 vim.opt.clipboard = "unnamedplus"
 
+if not vim.g.neovide and vim.env.SSH_CLIENT ~= nil and vim.env.TMUX == nil then
 
-local copy
-if vim.env.TMUX ~= nil then
-  copy = function(lines, _)
-    local xclip = io.popen("xclip -sel clip", "w")
-    if xclip ~= nil then
-      xclip:write(table.concat(lines, "\n"))
-      xclip:close()
-    end
-  end
-else
-  copy = function(lines, _)
+  local copy = function(lines, _)
     vim.fn.OSCYankString(table.concat(lines, "\n"))
   end
-end
 
-local paste
-paste = function()
-  local xclip = io.popen("xclip -o -sel clip", "r")
-  if xclip ~= nil then
-    local result = xclip:read("a")
-    xclip:close()
-    return { vim.fn.split(result, '\n'), 'b' }
+  local paste
+  paste = function()
+    local xclip = io.popen("xclip -o -sel clip", "r")
+    if xclip ~= nil then
+      local result = xclip:read("a")
+      xclip:close()
+      return { vim.fn.split(result, '\n'), 'b' }
+    end
   end
-end
 
-if not vim.g.neovide and vim.env.SSH_CLIENT ~= nil then
   vim.g.clipboard = {
     name = "osc52",
     copy = {
