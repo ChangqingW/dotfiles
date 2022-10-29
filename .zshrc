@@ -69,14 +69,6 @@ export EDITOR="nvim"
 setopt AUTO_PUSHD
 setopt extendedglob # use ^ to exlucde
 
-# Syntax highlighting
-if [[ -f $PATH_VARS_HOMEBREW/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source $PATH_VARS_HOMEBREW/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-elif [[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#C678DD,bold,underline"  
-
 # Auto-suggestions
 if [[ -f $PATH_VARS_HOMEBREW/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
   source $PATH_VARS_HOMEBREW/share/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -97,6 +89,13 @@ fi
 # zsh-vi-mode
 if [ -f ~/.zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]; then
   source ~/.zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+elif [[ -f /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh ]]; then
+  source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+fi
+
+# Syntax highlighting
+if [[ -f ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ]]; then
+  source ~/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 fi
 
 # iterm2
@@ -109,9 +108,10 @@ if [[ -f $PATH_VARS_HOMEBREW/opt/powerlevel10k/powerlevel10k.zsh-theme ]]; then
   source $PATH_VARS_HOMEBREW/opt/powerlevel10k/powerlevel10k.zsh-theme
 elif [[ -f ~/powerlevel10k/powerlevel10k.zsh-theme ]]; then
   source ~/powerlevel10k/powerlevel10k.zsh-theme
+elif [[ -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh

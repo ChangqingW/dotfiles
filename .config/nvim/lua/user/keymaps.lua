@@ -38,7 +38,7 @@ vim.cmd [[ command! Format execute 'lua Format_wrapper()' ]]
 function Format_wrapper()
   for _,val in pairs(vim.lsp.get_active_clients()) do
     if val["server_capabilities"]["documentFormattingProvider"] then
-      return vim.lsp.buf.formatting()
+      return vim.lsp.buf.format({ async = true })
     end
   end
   print("No active formatters")

@@ -33,15 +33,6 @@ vim.opt.showmatch = false
 --vim.opt.belloff = "all"
 
 -- misc
-if vim.env.TERM == 'xterm-256color' or vim.env.TERM == nil then
-  vim.opt.termguicolors = true
-elseif vim.env.TERM then
-  vim.notify("$TERM: " .. vim.env.TERM .. ", disabling termguicolors")
-  -- vim.notify("TERM: " .. env_term .. ", termguicolors disabled")
-elseif (not vim.g.vscode) then
-  vim.notify("Failed to get $TERM, disabling termguicolors")
-end
-
 vim.opt.history = 50
 vim.opt.mouse = "a"
 
@@ -51,7 +42,7 @@ vim.opt.clipboard = "unnamedplus"
 
 
 local copy
-if vim.env.TMUX ~= nil and vim.env.HOSTNAME ~= nil and string.find(vim.env.HOSTNAME, "hpc.wehi.edu.au") ~= nil then
+if vim.env.TMUX ~= nil then
   copy = function(lines, _)
     local xclip = io.popen("xclip -sel clip", "w")
     if xclip ~= nil then
@@ -66,25 +57,16 @@ else
 end
 
 local paste
-if vim.env.SSH_CLIENT ~= nil then
-  paste = function()
-    local xclip = io.popen("xclip -o -sel clip", "r")
-    if xclip ~= nil then
-      local result = xclip:read("a")
-      xclip:close()
-      return { vim.fn.split(result, '\n'), 'b' }
-    end
-  end
-else
-  paste = function()
-    return {
-      vim.fn.split(vim.fn.getreg(''), '\n'),
-      vim.fn.getregtype('')
-    }
+paste = function()
+  local xclip = io.popen("xclip -o -sel clip", "r")
+  if xclip ~= nil then
+    local result = xclip:read("a")
+    xclip:close()
+    return { vim.fn.split(result, '\n'), 'b' }
   end
 end
 
-if not vim.g.neovide and vim.env.TMUX == nil then
+if not vim.g.neovide and vim.env.SSH_CLIENT ~= nil then
   vim.g.clipboard = {
     name = "osc52",
     copy = {
