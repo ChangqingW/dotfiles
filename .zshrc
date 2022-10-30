@@ -37,8 +37,13 @@ if type "ruby" > /dev/null && [[ ! $PATH =~ $(ruby -e 'puts File.join(Gem.user_d
   PATH=$(ruby -e 'puts File.join(Gem.user_dir, "bin")'):$PATH
 fi
 
-SAVEHIST=2000  # Save most-recent 1000 lines
+# history
+SAVEHIST=10000
+HISTSIZE=2000
 HISTFILE=~/.zsh_history
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
 
 # Alias
 if [[ -f /Library/Frameworks/R.framework/Resources/R ]]; then
