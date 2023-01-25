@@ -1,1 +1,1 @@
-vim.opt.shiftwidth = 4 -- Number of spaces for indentation
+vim.opt.shiftwidth = 2 -- Number of spaces for indentation
