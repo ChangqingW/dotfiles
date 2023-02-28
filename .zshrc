@@ -123,9 +123,9 @@ if [ -f /etc/profile.d/modules.sh ]; then
   module load git
   module load R/4.2.1
   module load stornext
-  module load htslib
+  module load ImageMagick/7.0.9-5
   module load gcc/11.2.0
-  PATH_VARS_CONDA='/stornext/System/data/apps/anaconda3/anaconda3-latest'
+  PATH_VARS_CONDA='/stornext/HPCScratch/home/wang.ch/conda_dir/envs/my_base/'
 elif [ -d $HOME/opt/anaconda3 ]; then
   PATH_VARS_CONDA=$HOME/opt/anaconda3
 elif [ -d "/opt/anaconda3" ]; then
@@ -142,7 +142,7 @@ if [ -d $PATH_VARS_CONDA ]; then
       if [ -f $PATH_VARS_CONDA/etc/profile.d/conda.sh ]; then
           . $PATH_VARS_CONDA/etc/profile.d/conda.sh
       else
-          export PATH=$PATH_VARS_CONDA/bin:$PATH
+          [[ ! $PATH =~ $PATH_VARS_CONDA ]] && export PATH=$PATH_VARS_CONDA/bin:$PATH
       fi
   fi
   unset __conda_setup
@@ -152,11 +152,6 @@ else
 fi
 
 [ -f $HOME/paths.sh ] && source "${HOME}/paths.sh"
-
-if [[ "$HOSTNAME" =~ "hpc.wehi.edu.au" ]]; then
-  # my_base
-  conda activate my_base
-fi 
 
 # compinstall: tab selection
 zstyle :compinstall filename '~/.zshrc'
