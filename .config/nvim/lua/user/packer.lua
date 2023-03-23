@@ -87,7 +87,9 @@ return packer.startup(function(use)
     "neovim/nvim-lspconfig", -- enable LSP
     config = function () vim.opt.signcolumn = "yes" end
     }
-  use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  use { "williamboman/mason.nvim" }
+  use { "williamboman/mason-lspconfig.nvim" }
+
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
   use({
     "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
