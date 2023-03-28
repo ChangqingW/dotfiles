@@ -121,11 +121,11 @@ fi
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
   module load git
-  module load R/4.2.1
+  module load R/4.2.3
   module load stornext
   module load ImageMagick/7.0.9-5
-  module load gcc/11.2.0
-  PATH_VARS_CONDA='/stornext/HPCScratch/home/wang.ch/conda_dir/envs/my_base/'
+  module load gcc/12.2.0
+  PATH_VARS_CONDA='/home/users/allstaff/wang.ch/miniconda3'
 elif [ -d $HOME/opt/anaconda3 ]; then
   PATH_VARS_CONDA=$HOME/opt/anaconda3
 elif [ -d "/opt/anaconda3" ]; then

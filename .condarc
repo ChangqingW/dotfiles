@@ -1,0 +1,6 @@
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+auto_activate_base: true
+solver: libmamba
