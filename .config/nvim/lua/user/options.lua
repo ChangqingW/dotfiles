@@ -37,47 +37,38 @@ vim.opt.history = 50
 vim.opt.mouse = "a"
 
 -- clipboard
--- https://github.com/ojroques/vim-oscyank/issues/24
+-- vim.g['vim_tmux_clipboard#loadb_option'] = '-w'
 vim.opt.clipboard = "unnamedplus"
 
-if not vim.g.neovide and vim.env.SSH_CLIENT ~= nil and vim.env.TMUX == nil then
-
-  local copy = function(lines, _)
-    vim.fn.OSCYankString(table.concat(lines, "\n"))
-  end
-
-  local paste
-  paste = function()
-    local xclip = io.popen("xclip -o -sel clip", "r")
-    if xclip ~= nil then
-      local result = xclip:read("a")
-      xclip:close()
-      return { vim.fn.split(result, '\n'), 'b' }
-    end
-  end
-
-  vim.g.clipboard = {
-    name = "osc52",
-    copy = {
-      ["+"] = copy,
-      ["*"] = copy
-    },
-    paste = {
-      ["+"] = paste,
-      ["*"] = paste
-    }
-  }
+local function copy(lines, _)
+  require('osc52').copy(table.concat(lines, '\n'))
 end
+
+local function paste()
+  return { vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('') }
+end
+
+vim.g.clipboard = {
+  name = "osc52",
+  copy = {
+    ["+"] = copy,
+    ["*"] = copy
+  },
+  paste = {
+    ["+"] = paste,
+    ["*"] = paste
+  }
+}
 
 vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.shortmess:append "Ic"
-vim.opt.laststatus = 2 -- no ststus line when only one window
-vim.opt.swapfile = false -- big files
-vim.opt.splitbelow = true -- new split opens below
-vim.opt.splitright = true -- new split opens to right
-vim.opt.timeout = false -- key-combo timeout
+vim.opt.laststatus = 2     -- no ststus line when only one window
+vim.opt.swapfile = false   -- big files
+vim.opt.splitbelow = true  -- new split opens below
+vim.opt.splitright = true  -- new split opens to right
+vim.opt.timeout = false    -- key-combo timeout
 vim.opt.showcmd = true
-vim.opt.autoread = true -- reload changed file
+vim.opt.autoread = true    -- reload changed file
 vim.opt.startofline = true -- gg, G etc. move to start of line
 
 --vim.opt.tags = ./.tags;

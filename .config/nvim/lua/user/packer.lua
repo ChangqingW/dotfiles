@@ -131,12 +131,8 @@ return packer.startup(function(use)
   -- Telescope
   use "nvim-telescope/telescope.nvim"
 
-  use 'ojroques/vim-oscyank'
-  use {'ChangqingW/vim-tmux-clipboard',
-    cond = function ()
-      return (vim.env.TMUX ~= nil)
-    end
-  }
+  -- clipbard
+  use {'ojroques/nvim-osc52'}
 
   -- Git
   use {
