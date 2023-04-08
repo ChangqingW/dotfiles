@@ -19,9 +19,8 @@ elif [ -f /usr/local/Homebrew/bin/brew ]; then
   [[ ! $PATH =~ /usr/local/Homebrew/bin ]] && PATH=/usr/local/Homebrew/bin:$PATH
 fi
 
-if [[ -d $PATH_VARS_HOMEBREW/opt/grep/libexec/gnubin ]]; then
-  PATH=$PATH_VARS_HOMEBREW/opt/grep/libexec/gnubin:$PATH
-fi
+PATH=$(\ls -d $PATH_VARS_HOMEBREW/opt/*/libexec/gnubin | tr '\n' ':')$PATH
+
 
 # VSCode
 if [[ ! $PATH =~ 'Visual Studio Code.app' ]]; then
@@ -48,9 +47,6 @@ setopt HIST_IGNORE_SPACE
 # Alias
 if [[ -f /Library/Frameworks/R.framework/Resources/R ]]; then
   alias R="/Library/Frameworks/R.framework/Resources/R"
-fi
-if type "gsed" > /dev/null; then
-  alias sed="gsed"  
 fi
 if type "colorls" > /dev/null; then
   alias ls="colorls"
@@ -122,18 +118,19 @@ elif [[ -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+if [ -d $PATH_VARS_HOMEBREW/Caskroom/miniconda/base ]; then
+  PATH_VARS_CONDA=$PATH_VARS_HOMEBREW/Caskroom/miniconda/base
+elif [ -d $HOME/miniconda3 ]; then
+  PATH_VARS_CONDA=$HOME/miniconda3
+fi
+
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
   module load git
   module load R/4.2.3
   module load stornext
   module load ImageMagick/7.0.9-5
-  module load gcc/12.2.0
-  PATH_VARS_CONDA='/home/users/allstaff/wang.ch/miniconda3'
-elif [ -d $HOME/opt/anaconda3 ]; then
-  PATH_VARS_CONDA=$HOME/opt/anaconda3
-elif [ -d "/opt/anaconda3" ]; then
-  PATH_VARS_CONDA='/opt/anaconda3'
+  module unload gcc; module load gcc/12.2.0
 fi
 
 if [ -d $PATH_VARS_CONDA ]; then
