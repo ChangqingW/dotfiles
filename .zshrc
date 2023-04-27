@@ -54,7 +54,7 @@ if type "colorls" > /dev/null; then
 fi
 alias r="radian"
 alias vim="nvim"
-alias msg="python3 ~/Documents/wx_bot/msg.py"
+alias msg="python ~/Documents/wx_bot/msg.py"
 alias syncbib="rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib dropbox: -P; sed 's/date/year/g; s/journaltitle/journal/g;' ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib > ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib; rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib dropbox: -P --no-update-modtime"
 if [ -n "$TMUX" ]; then
   alias copy="head -c -1 | tmux loadb -w -"
