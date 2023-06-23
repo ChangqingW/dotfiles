@@ -19,7 +19,7 @@ elif [ -f /usr/local/Homebrew/bin/brew ]; then
   [[ ! $PATH =~ /usr/local/Homebrew/bin ]] && PATH=/usr/local/Homebrew/bin:$PATH
 fi
 
-PATH=$(\ls -d $PATH_VARS_HOMEBREW/opt/*/libexec/gnubin | tr '\n' ':')$PATH
+PATH=$((\ls -d $PATH_VARS_HOMEBREW/opt/*/libexec/gnubin) 2>/dev/null | tr '\n' ':')$PATH
 
 
 # VSCode
@@ -118,11 +118,10 @@ elif [[ -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-if [ -d $PATH_VARS_HOMEBREW/Caskroom/miniconda/base ]; then
-  PATH_VARS_CONDA=$PATH_VARS_HOMEBREW/Caskroom/miniconda/base
-elif [ -d $HOME/miniconda3 ]; then
-  PATH_VARS_CONDA=$HOME/miniconda3
-fi
+for folder (
+  $HOME/mambaforge
+  $HOME/miniconda3
+  ); [ -d "$folder" ] && PATH_VARS_CONDA=$folder && break
 
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
@@ -148,6 +147,10 @@ if [ -d $PATH_VARS_CONDA ]; then
   fi
   unset __conda_setup
 # <<< conda initialize <<<
+
+  if [[ $PATH_VARS_CONDA =~ 'mamba' ]] && [ -f $PATH_VARS_CONDA/etc/profile.d/mamba.sh ]; then
+    . $PATH_VARS_CONDA/etc/profile.d/mamba.sh
+  fi
 else
   echo "$PATH_VARS_CONDA not found!"
 fi
