@@ -44,13 +44,7 @@ nvim_tree.setup { -- BEGIN_DEFAULT_OPTS
     preserve_window_proportions = false,
     number = false,
     relativenumber = false,
-    signcolumn = "yes",
-    mappings = {
-      custom_only = false,
-      list = {
-        -- user mappings go here
-      },
-    },
+    signcolumn = "yes"
   },
   renderer = {
     indent_markers = {
