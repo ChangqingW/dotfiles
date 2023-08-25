@@ -44,6 +44,10 @@ setopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 
+export EDITOR="nvim"
+setopt AUTO_PUSHD
+setopt extendedglob # use ^ to exlucde
+
 # Alias
 if [[ -f /Library/Frameworks/R.framework/Resources/R ]]; then
   alias R="/Library/Frameworks/R.framework/Resources/R"
@@ -61,18 +65,6 @@ if [ -n "$TMUX" ]; then
 else
   alias copy="head -c -1 | xclip -sel clip"
 fi
-
-function preexec {
-  if [ -n "$TMUX" ] && [ -n "$(tmux show-environment | grep '^DISPLAY')" ]; then
-    #export $(tmux show-environment | grep "^SSH_AUTH_SOCK")
-    export $(tmux show-environment | grep "^DISPLAY")
-  fi
-}
-
-export EDITOR="nvim"
-
-setopt AUTO_PUSHD
-setopt extendedglob # use ^ to exlucde
 
 # Auto-suggestions
 if [[ -f $PATH_VARS_HOMEBREW/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
@@ -126,10 +118,10 @@ for folder (
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
   module load git
-  module load R/4.2.3
+  module load R/openBLAS/4.3.0
   module load stornext
   module load ImageMagick/7.0.9-5
-  module unload gcc; module load gcc/12.2.0
+  module load gcc/12.2.0
 fi
 
 if [ -d $PATH_VARS_CONDA ]; then
@@ -156,6 +148,14 @@ else
 fi
 
 [ -f $HOME/paths.sh ] && source "${HOME}/paths.sh"
+
+alias tmux=$(which tmux) # preserve tmux across conda envs
+function preexec {
+  if [ -n "$TMUX" ] && [ -n "$(tmux show-environment | grep '^DISPLAY')" ]; then
+    #export $(tmux show-environment | grep "^SSH_AUTH_SOCK")
+    export $(tmux show-environment | grep "^DISPLAY")
+  fi
+}
 
 # compinstall: tab selection
 zstyle :compinstall filename '~/.zshrc'
