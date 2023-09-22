@@ -34,15 +34,7 @@ vim.api.nvim_set_keymap("n", "<C-s>", ":SymbolsOutline<CR>", opts)
 vim.api.nvim_set_keymap("v", "<C-s>", ":ToggleTermSendVisualSelectionNoTrim<CR>", opts)
 
 -- lsp fomratting
-vim.cmd [[ command! Format execute 'lua Format_wrapper()' ]]
-function Format_wrapper()
-  for _,val in pairs(vim.lsp.get_active_clients()) do
-    if val["server_capabilities"]["documentFormattingProvider"] then
-      return vim.lsp.buf.format({ async = true })
-    end
-  end
-  print("No active formatters")
-end
+vim.cmd [[ command! -range Format if <range> | exec 'lua vim.lsp.buf.format({async = true, range={["start"]={<line1>,0},["end"]={<line2>,0}}})' | else | exec 'lua vim.lsp.buf.format({ async = true})' | endif ]]
 
 -- swith vim/tmux panes
 function TmuxMove(direction, tmuxParam)
