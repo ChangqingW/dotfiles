@@ -4,6 +4,8 @@ fi
 
 [[ -d $HOME/.local/bin ]] && [[ ! $PATH =~ $HOME/.local/bin ]] && PATH=$HOME/.local/bin/:$PATH
 [[ -d $HOME/bin ]] && [[ ! $PATH =~ $HOME/bin ]] && PATH=$HOME/bin/:$PATH
+[[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env" \
+  && [[ -d $HOME/.zsh/eza/completions/zsh ]] && export FPATH="$HOME/.zsh/eza/completions/zsh:$FPATH"
 
 # VSCode falsely adding conda to end of PATH
 # https://github.com/microsoft/vscode/issues/129979
@@ -45,6 +47,10 @@ setopt extendedglob # use ^ to exlucde
 # Alias
 if [[ -f /Library/Frameworks/R.framework/Resources/R ]]; then
   alias R="/Library/Frameworks/R.framework/Resources/R"
+fi
+if type "eza" > /dev/null; then
+  alias ls="eza --icons --color=always --git"
+  alias lt="eza -T --icons -l -smodified -r --color=always --git"
 fi
 alias r="radian"
 alias vim="nvim"
