@@ -21,7 +21,6 @@ fi
 
 PATH=$((\ls -d $PATH_VARS_HOMEBREW/opt/*/libexec/gnubin) 2>/dev/null | tr '\n' ':')$PATH
 
-
 # VSCode
 if [[ ! $PATH =~ 'Visual Studio Code.app' ]]; then
   if [ -f $HOME/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code ]; then
@@ -29,11 +28,6 @@ if [[ ! $PATH =~ 'Visual Studio Code.app' ]]; then
   elif [ -f /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code ]; then
     PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
   fi
-fi
-
-# Colorls
-if type "ruby" > /dev/null && [[ ! $PATH =~ $(ruby -e 'puts File.join(Gem.user_dir, "bin")') ]]; then
-  PATH=$(ruby -e 'puts File.join(Gem.user_dir, "bin")'):$PATH
 fi
 
 # history
@@ -52,13 +46,9 @@ setopt extendedglob # use ^ to exlucde
 if [[ -f /Library/Frameworks/R.framework/Resources/R ]]; then
   alias R="/Library/Frameworks/R.framework/Resources/R"
 fi
-if type "colorls" > /dev/null; then
-  alias ls="colorls"
-  alias la="colorls -A"
-fi
 alias r="radian"
 alias vim="nvim"
-alias msg="python ~/Documents/wx_bot/msg.py"
+alias msg="python3 ~/Documents/wx_bot/msg.py"
 alias syncbib="rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib dropbox: -P; sed 's/date/year/g; s/journaltitle/journal/g;' ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/references.bib > ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib; rclone sync ~/OneDrive\ -\ The\ University\ of\ Melbourne/Zotero/document.bib dropbox: -P --no-update-modtime"
 if [ -n "$TMUX" ]; then
   alias copy="head -c -1 | tmux loadb -w -"
@@ -113,38 +103,48 @@ fi
 for folder (
   $HOME/mambaforge
   $HOME/miniconda3
+  $PATH_VARS_HOMEBREW/opt/micromamba
   ); [ -d "$folder" ] && PATH_VARS_CONDA=$folder && break
 
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
   module load git
-  module load R/openBLAS/4.3.0
+  module load R/openBLAS/4.3.1
   module load stornext
   module load ImageMagick/7.0.9-5
   module load gcc/12.2.0
 fi
 
-if [ -d $PATH_VARS_CONDA ]; then
+if (( ${+PATH_VARS_CONDA} )) && [ -d $PATH_VARS_CONDA ]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-  __conda_setup="$($PATH_VARS_CONDA/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
+
+  if [[ $PATH_VARS_CONDA =~ 'micromamba' ]]; then
+    export MAMBA_ROOT_PREFIX=$HOME/micromamba
+    export MAMBA_EXE=$PATH_VARS_CONDA/bin/micromamba
+    __conda_setup="$("$MAMBA_EXE" shell hook --shell zsh --prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+  else
+    __conda_setup="$($PATH_VARS_CONDA/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
+  fi
   if [ $? -eq 0 ]; then
       eval "$__conda_setup"
   else
       if [ -f $PATH_VARS_CONDA/etc/profile.d/conda.sh ]; then
           . $PATH_VARS_CONDA/etc/profile.d/conda.sh
+      elif [ -f $PATH_VARS_CONDA/etc/profile.d/micromamba.sh ]; then
+          . $PATH_VARS_CONDA/etc/profile.d/micromamba.sh
       else
           [[ ! $PATH =~ $PATH_VARS_CONDA ]] && export PATH=$PATH_VARS_CONDA/bin:$PATH
       fi
   fi
   unset __conda_setup
-# <<< conda initialize <<<
 
-  if [[ $PATH_VARS_CONDA =~ 'mamba' ]] && [ -f $PATH_VARS_CONDA/etc/profile.d/mamba.sh ]; then
+  if [ -f $PATH_VARS_CONDA/etc/profile.d/mamba.sh ]; then
     . $PATH_VARS_CONDA/etc/profile.d/mamba.sh
   fi
+# <<< conda initialize <<<
 else
-  echo "$PATH_VARS_CONDA not found!"
+  echo conda path $PATH_VARS_CONDA not found!
 fi
 
 [ -f $HOME/paths.sh ] && source "${HOME}/paths.sh"
