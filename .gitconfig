@@ -1,0 +1,14 @@
+[include]
+  path = .gitconfig.local
+[pull]
+  rebase = false
+[difftool]
+  prompt = true
+[diff]
+  tool = nvimdiff
+[difftool "nvimdiff"]
+  cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[merge]
+  ff = only
+[alias]
+  tree = -c core.pager='less -SRF' log --graph --date-order --date=short --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%cn %C(reset)%C(green)%cr (%cd)'
