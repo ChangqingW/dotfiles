@@ -61,6 +61,13 @@ if [ -n "$TMUX" ]; then
 else
   alias copy="head -c -1 | xclip -sel clip"
 fi
+st() {
+  if [ -n "$TMUX" ]; then
+    tmux disable-prefix; command ssh "$@"; tmux restore-prefix 
+  else
+    command ssh "$@"
+  fi
+}
 
 # Auto-suggestions
 if [[ -f $PATH_VARS_HOMEBREW/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
