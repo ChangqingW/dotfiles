@@ -56,6 +56,7 @@ null_ls.setup({
     formatting.autopep8,
     formatting.google_java_format,
     -- formatting.clang_format,
+    formatting.rustfmt,
     styler,
   },
 })

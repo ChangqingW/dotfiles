@@ -49,6 +49,12 @@ vim.api.nvim_set_keymap("n", "<C-w>j", ":lua TmuxMove('j','D')<CR>", opts)
 vim.api.nvim_set_keymap("n", "<C-w>k", ":lua TmuxMove('k','U')<CR>", opts)
 vim.api.nvim_set_keymap("n", "<C-w>l", ":lua TmuxMove('l','R')<CR>", opts)
 
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Next()', { silent = true, expr = true })
+vim.api.nvim_set_keymap("i", "<C-k>", 'copilot#Previous()', { silent = true, expr = true })
+
 --local customNvimRMappings =function ()
 --  vim.api.nvim_buf_set_keymap(0, "i", "<Leader>sr", "<Plug>RStart", opts)
 --  vim.api.nvim_buf_set_keymap(0, "v", "<Leader>sr", "<Plug>RStart", opts)
