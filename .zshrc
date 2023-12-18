@@ -113,11 +113,16 @@ elif [[ -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-for folder (
-  $HOME/mambaforge
-  $HOME/miniconda3
-  $PATH_VARS_HOMEBREW/opt/micromamba
-  ); [ -d "$folder" ] && PATH_VARS_CONDA=$folder && break
+if type "micromamba" > /dev/null; then 
+  PATH_VARS_CONDA=$(which micromamba)
+  export MAMBA_EXE=$PATH_VARS_CONDA
+else 
+  for folder (
+    $HOME/mambaforge
+    $HOME/miniconda3
+    $PATH_VARS_HOMEBREW/opt/micromamba
+    ); [ -d "$folder" ] && PATH_VARS_CONDA=$folder && break
+fi
 
 if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
@@ -128,13 +133,13 @@ if [ -f /etc/profile.d/modules.sh ]; then
   module load gcc/12.2.0
 fi
 
-if (( ${+PATH_VARS_CONDA} )) && [ -d $PATH_VARS_CONDA ]; then
+if (( ${+PATH_VARS_CONDA} )) && [ -e $PATH_VARS_CONDA ]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 
   if [[ $PATH_VARS_CONDA =~ 'micromamba' ]]; then
     export MAMBA_ROOT_PREFIX=$HOME/micromamba
-    export MAMBA_EXE=$PATH_VARS_CONDA/bin/micromamba
+    [ -e "$PATH_VARS_CONDA/bin/micromamba" ] && export MAMBA_EXE=$PATH_VARS_CONDA/bin/micromamba
     __conda_setup="$("$MAMBA_EXE" shell hook --shell zsh --prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
   else
     __conda_setup="$($PATH_VARS_CONDA/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
