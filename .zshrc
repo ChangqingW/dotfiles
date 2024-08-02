@@ -113,6 +113,9 @@ elif [[ -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# broot
+[[ -f $HOME/.config/broot/launcher/bash/br ]] && . "$HOME/.config/broot/launcher/bash/br"
+
 if type "micromamba" > /dev/null; then 
   PATH_VARS_CONDA=$(which micromamba)
   export MAMBA_EXE=$PATH_VARS_CONDA
@@ -174,6 +177,11 @@ function preexec {
     export $(tmux show-environment | grep "^DISPLAY")
   fi
 }
+
+# atuin
+# https://github.com/atuinsh/atuin/issues/977
+zvm_after_init_commands+=(eval "$(atuin init zsh --disable-up-arrow)")
+bindkey '^r' atuin-search
 
 # compinstall: tab selection
 zstyle :compinstall filename '~/.zshrc'
