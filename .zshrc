@@ -104,8 +104,8 @@ if [[ -f ${HOME}/.iterm2_shell_integration.zsh ]]; then
 fi
 
 # Powerlevel10k
-if [[ -f $PATH_VARS_HOMEBREW/opt/powerlevel10k/powerlevel10k.zsh-theme ]]; then
-  source $PATH_VARS_HOMEBREW/opt/powerlevel10k/powerlevel10k.zsh-theme
+if [[ -f $PATH_VARS_HOMEBREW/share/powerlevel10k/powerlevel10k.zsh-theme ]]; then
+  source $PATH_VARS_HOMEBREW/share/powerlevel10k/powerlevel10k.zsh-theme
 elif [[ -f ~/powerlevel10k/powerlevel10k.zsh-theme ]]; then
   source ~/powerlevel10k/powerlevel10k.zsh-theme
 elif [[ -f /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme ]]; then
@@ -189,3 +189,4 @@ autoload -Uz compinit
 compinit
 zstyle ':completion:*' menu select
 # End of compinstall
+
