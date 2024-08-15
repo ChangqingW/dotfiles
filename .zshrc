@@ -41,6 +41,7 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 
 export EDITOR="nvim"
+export PAGER="less"
 setopt AUTO_PUSHD
 setopt extendedglob # use ^ to exlucde
 

@@ -17,11 +17,11 @@ end
 
 -- Autocommand that reloads neovim whenever you save the packer.lua file
 local group = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
- vim.api.nvim_create_autocmd("BufWritePost", {
-   command = "source <afile> | PackerSync",
-   pattern = "packer.lua",
-   group = group,
- })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  command = "source <afile> | PackerSync",
+  pattern = "packer.lua",
+  group = group,
+})
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
@@ -42,55 +42,53 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
   use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  use "nvim-lua/popup.nvim"    -- An implementation of the Popup API from vim in Neovim
+  use "nvim-lua/plenary.nvim"  -- Useful lua functions used ny lots of plugins
 
   -- UI
   -- colorscheme
   -- use({"catppuccin/nvim", as = "catppuccin"})
   use 'kyazdani42/nvim-web-devicons'
   use 'navarasu/onedark.nvim'
-  use {
-  'nvim-lualine/lualine.nvim',
-  } -- status line
+  use 'nvim-lualine/lualine.nvim' -- status line
 
   -- buffer tabs
   use {
     "akinsho/bufferline.nvim",
-    config = function () require("user.plugin_confs.bufferline") end
+    config = function() require("user.plugin_confs.bufferline") end
   }
 
   use {
     "akinsho/toggleterm.nvim",
-    config = function () require("user.plugin_confs.toggleterm") end
+    config = function() require("user.plugin_confs.toggleterm") end
   }
 
-  use {'ojroques/nvim-bufdel',
-    config = function () require('bufdel').setup{ quit = false } end
+  use { 'ojroques/nvim-bufdel',
+    config = function() require('bufdel').setup { quit = false } end
   }
 
   -- cmp plugins: require snippet plugin (use LuaSnip)
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
+  use "hrsh7th/nvim-cmp"         -- The completion plugin
+  use "hrsh7th/cmp-buffer"       -- buffer completions
+  use "hrsh7th/cmp-path"         -- path completions
   -- use "hrsh7th/cmp-cmdline" -- cmdline completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lsp"
-  use {"hrsh7th/cmp-omni"}
+  use "hrsh7th/cmp-omni"
 
   -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
+  use "L3MON4D3/LuaSnip"             --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   -- LSP
   use {
     "neovim/nvim-lspconfig", -- enable LSP
-    config = function () vim.opt.signcolumn = "yes" end
-    }
-  use { "williamboman/mason.nvim" }
-  use { "williamboman/mason-lspconfig.nvim" }
+    config = function() vim.opt.signcolumn = "yes" end
+  }
+  use "williamboman/mason.nvim"
+  use "williamboman/mason-lspconfig.nvim"
 
-  use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
+  use "tamago324/nlsp-settings.nvim"   -- language server settings defined in json for
   use({
     "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
     requires = { "nvim-lua/plenary.nvim" },
@@ -100,13 +98,13 @@ return packer.startup(function(use)
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
-    config = function () require("user.plugin_confs.treesitter") end
+    config = function() require("user.plugin_confs.treesitter") end
   }
   use "JoosepAlviste/nvim-ts-context-commentstring"
   use "p00f/nvim-ts-rainbow"
   use {
     "windwp/nvim-autopairs",
-    config = function () require('user.plugin_confs.autopairs') end
+    config = function() require('user.plugin_confs.autopairs') end
   }
   use "simrat39/symbols-outline.nvim"
 
@@ -123,31 +121,61 @@ return packer.startup(function(use)
   -- R
   use {
     "jalvesaq/Nvim-R",
-    branch = 'stable',
-    ft = {'r', 'rmd'},
-    config = function () require("user.plugin_confs.nvim-r") end
+    ft = { 'r', 'rmd' },
+    config = function() require("user.plugin_confs.nvim-r") end
   }
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
 
   -- clipbard
-  use {'ojroques/nvim-osc52'}
+  use 'ojroques/nvim-osc52'
 
   -- Git
   use {
     "lewis6991/gitsigns.nvim",
-    config = function () require('gitsigns').setup{yadm = {enable = true}} end
+    config = function()
+      require('gitsigns').setup {
+        _on_attach_pre = function(_, callback)
+          -- a global I set on nvim launch, so I dont have to check
+          -- each time this is run
+          vim.schedule(function()
+            -- if buffer is not a file, don't change anything
+            local file = vim.fn.expand("%:p")
+            if not vim.fn.filereadable(file) then
+              return callback()
+            end
+            local repo = vim.fn.expand("~/.local/share/yadm/repo.git")
+            -- use yadm ls-files to check if the file is tracked
+            require("plenary.job")
+                :new({
+                  command = "yadm",
+                  args = { "ls-files", "--error-unmatch", file },
+                  on_exit = vim.schedule_wrap(function(_, return_val)
+                    if return_val == 0 then
+                      return callback({
+                        gitdir = repo,
+                        toplevel = os.getenv("HOME"),
+                      })
+                    else
+                      return callback()
+                    end
+                  end),
+                })
+                :sync()
+          end)
+        end
+      }
+    end
   }
-
 
   use "junegunn/vim-easy-align" -- :EasyAlign */\t/
   use {
     "kyazdani42/nvim-tree.lua",
-    config = function () require("user.plugin_confs.nvim-tree") end
+    config = function() require("user.plugin_confs.nvim-tree") end
   }
 
-  use("nathom/filetype.nvim")
+  use "nathom/filetype.nvim"
   use 'lewis6991/impatient.nvim'
   use 'github/copilot.vim'
 
