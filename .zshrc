@@ -2,10 +2,33 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+if [ -f /etc/profile.d/modules.sh ]; then
+  source /etc/profile.d/modules.sh
+  module load git
+  module load R/flexiblas/4.4.1
+  module load stornext
+  module load ImageMagick/7.1.1
+  module load nodejs/20.16.0
+fi
+
 [[ -d $HOME/.local/bin ]] && [[ ! $PATH =~ $HOME/.local/bin ]] && PATH=$HOME/.local/bin/:$PATH
-[[ -d $HOME/bin ]] && [[ ! $PATH =~ $HOME/bin ]] && PATH=$HOME/bin/:$PATH
-[[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env" \
-  && [[ -d $HOME/.zsh/eza/completions/zsh ]] && export FPATH="$HOME/.zsh/eza/completions/zsh:$FPATH"
+if type "npm" > /dev/null; then 
+  PATH_VARS_NPM=$(npm prefix -g)/bin
+  [[ ! $PATH =~ $PATH_VARS_NPM ]] && PATH=$PATH_VARS_NPM:$PATH
+fi
+
+if [[ -d $HOME/.local/lib ]]; then
+  [[ ! $LD_LIBRARY_PATH =~ $HOME/.local/lib ]] && LD_LIBRARY_PATH=$HOME/.local/lib/:$LD_LIBRARY_PATH
+  [[ ! $LDFLAGS =~ $HOME/.local/lib ]] && LDFLAGS="-L$HOME/.local/lib $LDFLAGS"
+fi
+if [[ -d $HOME/.local/include ]]; then
+  [[ ! $CPPFLAGS =~ $HOME/.local/include ]] && CPPFLAGS="-I$HOME/.local/include $CPPFLAGS"
+  [[ ! $CFLAGS =~ $HOME/.local/include ]] && CFLAGS="-I$HOME/.local/include $CFLAGS"
+  [[ ! $CXXFLAGS =~ $HOME/.local/include ]] && CXXFLAGS="-I$HOME/.local/include $CXXFLAGS"
+fi
+[[ -d $HOME/.local/share/man ]] && [[ ! $MANPATH =~ $HOME/.local/share/man ]] && MANPATH=$HOME/.local/share/man:$MANPATH
+[[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
+[[ -d $HOME/.zsh/eza/completions/zsh ]] && export FPATH="$HOME/.zsh/eza/completions/zsh:$FPATH"
 
 # VSCode falsely adding conda to end of PATH
 # https://github.com/microsoft/vscode/issues/129979
@@ -126,15 +149,6 @@ else
     $HOME/miniconda3
     $PATH_VARS_HOMEBREW/opt/micromamba
     ); [ -d "$folder" ] && PATH_VARS_CONDA=$folder && break
-fi
-
-if [ -f /etc/profile.d/modules.sh ]; then
-  source /etc/profile.d/modules.sh
-  module load git
-  module load R/openBLAS/4.3.1
-  module load stornext
-  module load ImageMagick/7.0.9-5
-  module load gcc/12.2.0
 fi
 
 if (( ${+PATH_VARS_CONDA} )) && [ -e $PATH_VARS_CONDA ]; then

@@ -10,3 +10,4 @@ if (interactive()) {
 .Last <- function() {
   if (interactive()) try(savehistory("~/.Rhistory"))
 }
+options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])))
