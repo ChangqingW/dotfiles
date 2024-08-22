@@ -118,13 +118,6 @@ return packer.startup(function(use)
     })
   end
 
-  -- R
-  use {
-    "jalvesaq/Nvim-R",
-    ft = { 'r', 'rmd' },
-    config = function() require("user.plugin_confs.nvim-r") end
-  }
-
   -- Telescope
   use "nvim-telescope/telescope.nvim"
 
@@ -175,7 +168,6 @@ return packer.startup(function(use)
     config = function() require("user.plugin_confs.nvim-tree") end
   }
 
-  use "nathom/filetype.nvim"
   use 'lewis6991/impatient.nvim'
   use 'github/copilot.vim'
 
