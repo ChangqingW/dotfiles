@@ -198,6 +198,8 @@ function preexec {
 zvm_after_init_commands+=(eval "$(atuin init zsh --disable-up-arrow)")
 bindkey '^r' atuin-search
 
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 # compinstall: tab selection
 zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
