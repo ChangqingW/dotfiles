@@ -7,6 +7,6 @@
   selected:         linear-gradient(to right, #363A4FFF, #B7BDF869);
   button:           linear-gradient(#939AB7FF);
   button-selected:  linear-gradient(#B7BDF869);
-  active:           linear-gradient(to right, #8BD5CAFF, #A6DA95FF);
-  urgent:           #ED8796FF;
+  active:           linear-gradient(to right, #305777, #633C6E);
+  urgent:           linear-gradient(to right, #437aa7, #8a549a);
 }

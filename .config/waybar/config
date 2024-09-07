@@ -1,0 +1,84 @@
+{
+  "layer": "top",
+    "modules-left": ["temperature", "systemd-failed-units"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["wireplumber", "bluetooth", "network", "clock"],
+    "custom/arch": {
+      "format": "  ",
+      "tooltip": false,
+    },
+    "systemd-failed-units": {
+      "hide-on-ok": false, // Do not hide if there is zero failed units.
+	    "format": "<span color='#b4befe'> </span>: {nr_failed}✗",
+	    "format-ok": "<span color='#b4befe'> </span>✓",
+	    "system": true, // Monitor failed systemwide units.
+	    "user": true
+    },
+    "temperature": {
+      "thermal-zone": 2,
+      // "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input",
+      "critical-threshold": 80,
+      "format-critical": " : {temperatureC}°C!",
+      "format": " : {temperatureC}°C",
+      "tooltip": false,
+    },
+    "hyprland/workspaces": {
+      "format": "{name}",
+      "format": "{icon}",
+      "tooltip": false,
+      "all-outputs": true,
+      "format-icons": {
+        "active": "",
+        "default": ""
+      }
+    },
+    "clock": {
+      "format": "<span color='#b4befe'> </span>{:%Z %H:%M:%S %Y-%b-%d (%a)}",
+      "timezones": ["Australia/Melbourne", "Asia/Shanghai"],
+      "tooltip": false,
+      "actions":  {
+        "on-click-middle": "tz_down",
+        "on-scroll-up": "tz_up",
+        "on-scroll-down": "tz_down"
+      }
+    },
+    "backlight": {
+      "device": "intel_backlight",
+      "format": "<span color='#b4befe'>{icon}</span> {percent}%",
+      "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },
+    "wireplumber": {
+      "format": "<span color='#b4befe'>{icon}</span> {volume}%",
+      "format-muted": "",
+      "tooltip": false,
+      "format-icons": {
+        "headphone": " ",
+        "default": ["", " ",  "󰕾 ",  "󰕾 ",  "󰕾 ",  " ",  " ",  " "]
+      },
+      "scroll-step": 1,
+    },
+    "bluetooth": {
+      "format": "<span color='#b4befe'></span>{status}",
+      "format-disabled": "", // an empty format will hide the module
+      "format-connected": "<span color='#b4befe'></span> {num_connections}",
+      "format-connected-battery": "<span color='#b4befe'></span> {device_battery_percentage}%",
+      "tooltip-format": "{controller_alias}\t{controller_address}",
+      "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+      "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    },
+    "network": {
+      "interface": "enp0s31f6",
+      "format": "{ifname}",
+      "format-wifi": "<span color='#b4befe'> </span>{essid}",
+      "format-disconnected": "<span color='#b4befe'>󰖪 </span>No Network",
+      "format-ethernet": "<span color='#b4befe'>󰈀 </span>{ifname}",
+      "tooltip-format-ethernet": "{ipaddr}/{cidr}\n{bandwidthUpBytes}  {bandwidthDownBytes} ",
+    },
+    "battery": {
+      "format": "<span color='#b4befe'>{icon}</span> {capacity}%",
+      "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+      "format-charging": "<span color='#b4befe'>󰂄</span> {capacity}%",
+      "tooltip": false,
+    },
+}
