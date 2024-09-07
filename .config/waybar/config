@@ -1,11 +1,18 @@
 {
   "layer": "top",
-    "modules-left": ["temperature", "systemd-failed-units"],
-    "modules-center": ["hyprland/workspaces"],
+    "modules-left": ["custom/hyprshot", "temperature", "systemd-failed-units"],
+    "modules-center": ["hyprland/workspaces", "hyprland/window"],
     "modules-right": ["wireplumber", "bluetooth", "network", "clock"],
     "custom/arch": {
       "format": "  ",
       "tooltip": false,
+    },
+    "custom/hyprshot": {
+      "format": "<span color='#b4befe'> </span>",
+      "tooltip": true,
+      "tooltip-format": "Click and select window for screenshot\nRight click to screenshot DP-1",
+      "on-click": "hyprshot -m window",
+      "on-click-right": "sleep 5 && hyprshot hyprshot -m output -m DP-1",
     },
     "systemd-failed-units": {
       "hide-on-ok": false, // Do not hide if there is zero failed units.
@@ -18,8 +25,8 @@
       "thermal-zone": 2,
       // "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input",
       "critical-threshold": 80,
-      "format-critical": " : {temperatureC}°C!",
-      "format": " : {temperatureC}°C",
+      "format-critical": "<span color='#b4befe'> </span>: {temperatureC}°C!",
+      "format": "<span color='#b4befe'> </span>: {temperatureC}°C",
       "tooltip": false,
     },
     "hyprland/workspaces": {
@@ -31,6 +38,12 @@
         "active": "",
         "default": ""
       }
+    },
+    "hyprland/window": {
+      "format": "{}",
+      "icon": true,
+      "icon-size": 24,
+      "separate-outputs": true
     },
     "clock": {
       "format": "<span color='#b4befe'> </span>{:%Z %H:%M:%S %Y-%b-%d (%a)}",
@@ -65,7 +78,8 @@
       "tooltip-format": "{controller_alias}\t{controller_address}",
       "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
       "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-      "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+      "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+      "on-click": "kitty bluetuith"
     },
     "network": {
       "interface": "enp0s31f6",

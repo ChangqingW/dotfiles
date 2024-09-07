@@ -32,7 +32,7 @@ window#waybar {
   color: #b4befe;
 }
 
-#clock, #backlight, #wireplumber, #bluetooth, #network, #battery, #systemd-failed-units, #workspaces, #temperature{
+#clock, #backlight, #wireplumber, #bluetooth, #network, #battery, #systemd-failed-units, #workspaces, #temperature, #window, #custom-hyprshot{
   margin-top: 1px;
   border-radius: 10px;
   background-color: #11111b;

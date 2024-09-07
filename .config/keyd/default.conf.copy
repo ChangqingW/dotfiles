@@ -1,0 +1,26 @@
+[ids]
+
+*
+
+[main]
+# See [meta]
+leftcontrol = layer(meta)
+
+# Alt between Ctrl and Super like in macOS
+# leftmeta = overload(alt, oneshot(alt))
+leftmeta = layer(alt)
+
+# meta+C/V etc to work everywhere
+leftalt = layer(control)
+
+[control]
+# rofi
+space = A-S-z
+# next workspace
+tab = A-S-x
+
+[meta] 
+# control is now meta, need to map a few control-x keys back
+tab = C-tab
+# w = C-w
+# t = C-t
