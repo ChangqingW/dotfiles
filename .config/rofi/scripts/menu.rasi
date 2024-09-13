@@ -1,0 +1,81 @@
+configuration {
+    show-icons:                     true;
+    display-drun: 		            "";
+    drun-display-format:            "{icon} {name}";
+    disable-history:                false;
+    click-to-exit: 		            true;
+    location:                       1;
+}
+
+@import "../theme/catppuccin-macchiato.rasi"
+
+window {
+    transparency:                   "real";
+    background-color:               @background;
+    text-color:                     @foreground;
+    border:                  	    2px;
+    border-color:                   @accent;
+    border-radius:                  10px;
+    width:                          300px;
+}
+
+listview {
+    background-color:               transparent;
+    columns:                        1;
+    lines:			                2;
+    spacing:                        15px;
+    cycle:                          true;
+    dynamic:                        true;
+    layout:                         vertical;
+}
+
+prompt {
+  enabled:                     true;
+  background-color:            transparent;
+  text-color:                  @foreground;
+}
+
+mainbox {
+    background-color:               transparent;
+    children:                       [ prompt, listview ];
+    spacing:                        15px;
+    padding:                        15px;
+}
+
+element {
+    background-color:               transparent;
+    text-color:                     @foreground;
+    orientation:                    horizontal;
+    border-radius:                  10px;
+    padding:                        20px;
+}
+
+element-icon {
+    background-color: 		        transparent;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    size:                           0px;
+    border:                         0px;
+}
+
+element-text {
+    background-color: 		        inherit;
+    text-color:       		        inherit;
+    expand:                         true;
+    horizontal-align:               0.5;
+    vertical-align:                 0.5;
+    margin:                         0px 0px 0px 0px;
+}
+
+element selected {
+    background-image:            @selected;
+    text-color:                  @foreground;
+    border:                  	    0px 0px 0px 0px;
+    border-radius:                  10px;
+}
+
+entry {
+    expand: 		        true;
+    width: 		            150px;
+    text-color:		        @accent;
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+rofi_command="rofi -theme $HOME/.config/rofi/scripts/menu.rasi"
+
+shutdown="󰐥 Shutdown"
+reboot="󰜉 Reboot"
+
+rdialog () {
+echo -e "Yes\nCancel" | $rofi_command -dmenu -p "$1"
+}
+
+
+options="$shutdown\n$reboot"
+chosen="$(echo -e "$options" | $rofi_command -p "> Power options:" -dmenu -selected-row 0)"
+case $chosen in
+  $shutdown)
+    ans=$(rdialog "🥺👉👈 Shutdown?")
+    if [[ $ans == "Yes" ]] ; then
+      systemctl poweroff
+    else
+      exit 0
+    fi
+    ;;
+  $reboot)
+    ans=$(rdialog " Reboot?")
+    if [[ $ans == "Yes" ]] ; then
+      systemctl reboot
+    else
+      exit 0
+    fi
+    ;;
+esac

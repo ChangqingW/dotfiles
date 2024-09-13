@@ -1,25 +1,25 @@
 {
   "layer": "top",
-    "modules-left": ["custom/hyprshot", "temperature", "systemd-failed-units"],
+    "modules-left": ["custom/arch", "custom/hyprshot", "temperature", "systemd-failed-units"],
     "modules-center": ["hyprland/workspaces", "hyprland/window"],
     "modules-right": ["wireplumber", "bluetooth", "network", "clock"],
     "custom/arch": {
       "format": "  ",
       "tooltip": false,
+      "on-click": "sh $HOME/.config/rofi/scripts/powermenu"
     },
     "custom/hyprshot": {
       "format": "<span color='#b4befe'> </span>",
-      "tooltip": true,
-      "tooltip-format": "Click and select window for screenshot\nRight click to screenshot DP-1",
-      "on-click": "hyprshot -m window",
-      "on-click-right": "sleep 5 && hyprshot hyprshot -m output -m DP-1",
+      "tooltip": false,
+      "on-click": "sh $HOME/.config/rofi/scripts/hyprshotmenu"
     },
     "systemd-failed-units": {
-      "hide-on-ok": false, // Do not hide if there is zero failed units.
+      "hide-on-ok": true,
 	    "format": "<span color='#b4befe'> </span>: {nr_failed}✗",
 	    "format-ok": "<span color='#b4befe'> </span>✓",
 	    "system": true, // Monitor failed systemwide units.
-	    "user": true
+	    "user": true,
+      "on-click": "kitty sh -c 'systemctl --failed; systemctl --user --failed'"
     },
     "temperature": {
       "thermal-zone": 2,
@@ -30,14 +30,13 @@
       "tooltip": false,
     },
     "hyprland/workspaces": {
-      "format": "{name}",
-      "format": "{icon}",
-      "tooltip": false,
-      "all-outputs": true,
+      "format": "{icon} {name}",
       "format-icons": {
         "active": "",
         "default": ""
-      }
+      },
+      "tooltip": false,
+      "all-outputs": true
     },
     "hyprland/window": {
       "format": "{}",
@@ -46,7 +45,7 @@
       "separate-outputs": true
     },
     "clock": {
-      "format": "<span color='#b4befe'> </span>{:%Z %H:%M:%S %Y-%b-%d (%a)}",
+      "format": "<span color='#b4befe'> </span>{:L%Z %H:%M:%S %Y-%b-%d (%a)}",
       "timezones": ["Australia/Melbourne", "Asia/Shanghai"],
       "tooltip": false,
       "actions":  {

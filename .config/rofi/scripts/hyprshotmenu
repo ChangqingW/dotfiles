@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+rofi_command="rofi -theme $HOME/.config/rofi/scripts/hyprshotmenu.rasi"
+
+screen="󰍹  Screen (DP-1)"
+window="  Select window" 
+area="󰩬 Select area"
+
+options="$screen\n$window\n$area"
+chosen="$(echo -e "$options" | $rofi_command -p "> Screenshot:" -dmenu -selected-row 0)"
+case $chosen in
+  $screen)
+    sleep 5 && hyprshot hyprshot -m output -m DP-1
+    ;;
+  $window)
+    hyprshot -m window
+    ;;
+  $area)
+    hyprshot -m region 
+    ;;
+esac

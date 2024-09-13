@@ -1,0 +1,10 @@
+@import "menu.rasi"
+
+window {
+    x-offset:                       2.2%;
+}
+
+listview {
+    lines:			                3;
+}
+
