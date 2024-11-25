@@ -20,6 +20,12 @@ fi
 if [[ -d $HOME/.local/lib ]]; then
   [[ ! $LD_LIBRARY_PATH =~ $HOME/.local/lib ]] && LD_LIBRARY_PATH=$HOME/.local/lib/:$LD_LIBRARY_PATH
   [[ ! $LDFLAGS =~ $HOME/.local/lib ]] && LDFLAGS="-L$HOME/.local/lib $LDFLAGS"
+  [[ ! $PKG_CONFIG_PATH =~ $HOME/.local/lib/pkgconfig ]] && PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH
+fi
+if [[ -d $HOME/.local/lib64 ]]; then
+  [[ ! $LD_LIBRARY_PATH =~ $HOME/.local/lib64 ]] && LD_LIBRARY_PATH=$HOME/.local/lib64/:$LD_LIBRARY_PATH
+  [[ ! $LDFLAGS =~ $HOME/.local/lib64 ]] && LDFLAGS="-L$HOME/.local/lib64 $LDFLAGS"
+  [[ ! $PKG_CONFIG_PATH =~ $HOME/.local/lib64/pkgconfig ]] && PKG_CONFIG_PATH=$HOME/.local/lib64/pkgconfig:$PKG_CONFIG_PATH
 fi
 if [[ -d $HOME/.local/include ]]; then
   [[ ! $CPPFLAGS =~ $HOME/.local/include ]] && CPPFLAGS="-I$HOME/.local/include $CPPFLAGS"
@@ -65,6 +71,7 @@ setopt HIST_IGNORE_SPACE
 
 export EDITOR="nvim"
 export PAGER="less"
+export MANPAGER='nvim +Man!'
 setopt AUTO_PUSHD
 setopt extendedglob # use ^ to exlucde
 
@@ -197,6 +204,10 @@ function preexec {
 # https://github.com/atuinsh/atuin/issues/977
 zvm_after_init_commands+=(eval "$(atuin init zsh --disable-up-arrow)")
 bindkey '^r' atuin-search
+
+reverse_complement() {
+    Rscript -e "Biostrings::DNAString('$1') |> Biostrings::reverseComplement() |> as.character() |> paste0('\n') |> cat()"
+}
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
