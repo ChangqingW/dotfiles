@@ -165,7 +165,7 @@ if (( ${+PATH_VARS_CONDA} )) && [ -e $PATH_VARS_CONDA ]; then
   if [[ $PATH_VARS_CONDA =~ 'micromamba' ]]; then
     export MAMBA_ROOT_PREFIX=$HOME/micromamba
     [ -e "$PATH_VARS_CONDA/bin/micromamba" ] && export MAMBA_EXE=$PATH_VARS_CONDA/bin/micromamba
-    __conda_setup="$("$MAMBA_EXE" shell hook --shell zsh --prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+    __conda_setup="$("$MAMBA_EXE" shell hook --shell zsh --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
   else
     __conda_setup="$($PATH_VARS_CONDA/bin/conda 'shell.zsh' 'hook' 2> /dev/null)"
   fi
