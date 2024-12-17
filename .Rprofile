@@ -1,4 +1,13 @@
 options(menu.graphics = FALSE)
+options(pager = function(files, header, title, delete.file){
+  # debug info
+  # cat(sprintf("Inputs:\n  files: %s\n  header: %s\n  title: %s\n  delete.file: %s\n", files, header, title, delete.file))
+  system2("nvim", args = c(files, '+Man!', sprintf("+'file! %s'", title)))
+  if(delete.file){
+    file.remove(files)
+  }
+})
+
 options(Ncpus = 8)
 if (grepl("\\.au$", Sys.getenv("HOSTNAME"))) {
   options(repos = c(CRAN = "https://mirror.aarnet.edu.au/pub/CRAN"))

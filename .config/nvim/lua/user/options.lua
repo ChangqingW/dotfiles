@@ -8,6 +8,12 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.numberwidth = 4
 
+-- special characters
+vim.opt.list = true
+vim.opt.listchars = {
+  tab = " ",
+}
+
 -- tab: 2 spaces
 vim.opt.expandtab = true
 vim.opt.tabstop = 2

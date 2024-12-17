@@ -5,11 +5,14 @@ if status_ok then
     transparent = true, -- onedark:282c34 catppuccin:1e1e2e
     style = 'cool',
     code_style = { comments = 'italic,bold' },
-    highlights = { Visual = {bg = "#000001"}}
+    highlights = {
+      Visual = { bg = "#000001" },
+      Whitespace = { fg = "#D99A5E" } -- listchars:tab
+    }
   })
   onedark.load()
   require('lualine').setup { -- assumed lualine exists
-    options = {theme = "onedark"}
+    options = { theme = "onedark" }
   }
 else
   vim.notify("colorscheme not found!")
@@ -35,4 +38,3 @@ end
 -- else
 --   vim.notify("colorscheme not found!")
 -- end
-
