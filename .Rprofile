@@ -13,10 +13,10 @@ if (grepl("\\.au$", Sys.getenv("HOSTNAME"))) {
   options(repos = c(CRAN = "https://mirror.aarnet.edu.au/pub/CRAN"))
 }
 
-if (interactive()) {
+if (interactive() & Sys.getenv("RADIAN_VERSION") == "") {
   try(utils::loadhistory("~/.Rhistory"))
 }
 .Last <- function() {
-  if (interactive()) try(savehistory("~/.Rhistory"))
+  if (interactive() & Sys.getenv("RADIAN_VERSION") == "") try(savehistory("~/.Rhistory"))
 }
 options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])))
