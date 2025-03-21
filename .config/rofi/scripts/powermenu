@@ -4,14 +4,15 @@ rofi_command="rofi -theme $HOME/.config/rofi/scripts/menu.rasi"
 
 shutdown="󰐥 Shutdown"
 reboot="󰜉 Reboot"
+suspend="󰒲 Suspend"
 
 rdialog () {
-echo -e "Yes\nCancel" | $rofi_command -dmenu -p "$1"
+echo -e "Yes\nCancel" | $rofi_command -dmenu -p "$1" -l 2
 }
 
 
-options="$shutdown\n$reboot"
-chosen="$(echo -e "$options" | $rofi_command -p "> Power options:" -dmenu -selected-row 0)"
+options="$suspend\n$shutdown\n$reboot"
+chosen="$(echo -e "$options" | $rofi_command -p "> Power options:" -dmenu -l 3 -selected-row 0)"
 case $chosen in
   $shutdown)
     ans=$(rdialog "🥺👉👈 Shutdown?")
@@ -25,6 +26,14 @@ case $chosen in
     ans=$(rdialog " Reboot?")
     if [[ $ans == "Yes" ]] ; then
       systemctl reboot
+    else
+      exit 0
+    fi
+    ;;
+  $suspend)
+    ans=$(rdialog "🥱 Suspend?")
+    if [[ $ans == "Yes" ]] ; then
+      systemctl suspend
     else
       exit 0
     fi
