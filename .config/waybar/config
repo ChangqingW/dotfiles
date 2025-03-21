@@ -1,12 +1,15 @@
 {
   "layer": "top",
-    "modules-left": ["custom/arch", "custom/hyprshot", "temperature", "systemd-failed-units"],
+    "modules-left": ["custom/arch", "custom/hyprshot", "temperature", "memory", "systemd-failed-units", "wlr/taskbar"],
     "modules-center": ["hyprland/workspaces", "hyprland/window"],
     "modules-right": ["wireplumber", "bluetooth", "network", "clock"],
     "custom/arch": {
       "format": "  ",
       "tooltip": false,
       "on-click": "sh $HOME/.config/rofi/scripts/powermenu"
+    },
+    "tray":{
+        "icon-size":24
     },
     "custom/hyprshot": {
       "format": "<span color='#b4befe'> </span>",
@@ -25,12 +28,33 @@
       // "thermal-zone": 3, // different after reboot
       "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input",
       "critical-threshold": 80,
-      "format-critical": "<span color='#b4befe'> </span>: {temperatureC}°C!",
-      "format": "<span color='#b4befe'> </span>: {temperatureC}°C",
+      "format-critical": "<span color='#b4befe'>  </span>{temperatureC}°C!",
+      "format": "<span color='#b4befe'>  </span>{temperatureC}°C",
       "tooltip": false,
     },
+    "memory": {
+      "interval": 30,
+      "format": "<span color='#b4befe'>󰑭 </span>{used:0.1f}G/{total:0.1f}G",
+      "max-length": 20
+    },
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 28,
+        "tooltip-format": "{title}",
+        "on-click": "activate",
+        "on-click-middle": "fullscreen"
+        // "on-click-middle": "close",
+    },
     "hyprland/workspaces": {
-      "format": "{icon} {name}",
+      "format": "{icon} {name} {windows}",
+      "window-rewrite-default": "",
+      "window-rewrite": {
+        "class<firefox-developer-edition>": "", // Windows whose classes are "firefox"
+        "class<kitty>": "",
+        // "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
+        // "class<firefox.*> title<.*github.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
+        // "code": "󰨞",
+      },
       "format-icons": {
         "active": "",
         "default": ""

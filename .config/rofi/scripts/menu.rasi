@@ -26,7 +26,6 @@ window {
 listview {
     background-color:               transparent;
     columns:                        1;
-    lines:			                2;
     spacing:                        15px;
     cycle:                          true;
     dynamic:                        true;

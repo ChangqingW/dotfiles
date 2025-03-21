@@ -7,7 +7,7 @@ window="  Select window"
 area="󰩬 Select area"
 
 options="$screen\n$window\n$area"
-chosen="$(echo -e "$options" | $rofi_command -p "> Screenshot:" -dmenu -selected-row 0)"
+chosen="$(echo -e "$options" | $rofi_command -p "> Screenshot:" -dmenu -l 3 -selected-row 0)"
 case $chosen in
   $screen)
     sleep 3 && hyprshot hyprshot -m output -m DP-1
