@@ -1,8 +1,8 @@
 {
   "layer": "top",
-    "modules-left": ["custom/arch", "custom/hyprshot", "temperature", "memory", "systemd-failed-units", "wlr/taskbar"],
-    "modules-center": ["hyprland/workspaces", "hyprland/window"],
-    "modules-right": ["wireplumber", "bluetooth", "network", "clock"],
+    "modules-left": ["custom/arch", "custom/hyprshot", "temperature", "memory", "systemd-failed-units", "hyprland/window", "wlr/taskbar"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["privacy", "wireplumber", "bluetooth", "network", "clock"],
     "custom/arch": {
       "format": "  ",
       "tooltip": false,
@@ -28,8 +28,9 @@
       // "thermal-zone": 3, // different after reboot
       "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input",
       "critical-threshold": 80,
-      "format-critical": "<span color='#b4befe'>  </span>{temperatureC}°C!",
-      "format": "<span color='#b4befe'>  </span>{temperatureC}°C",
+      // use thin space ' '(U+2009) as padding after icons
+      "format-critical": "<span color='#b4befe'>  </span>{temperatureC}°C!",
+      "format": "<span color='#b4befe'>  </span>{temperatureC}°C",
       "tooltip": false,
     },
     "memory": {
@@ -51,6 +52,7 @@
       "window-rewrite": {
         "class<firefox-developer-edition>": "", // Windows whose classes are "firefox"
         "class<kitty>": "",
+        "class<clipse>": ""
         // "title<.*youtube.*>": "", // Windows whose titles contain "youtube"
         // "class<firefox.*> title<.*github.*>": "", // Windows whose class is "firefox" and title contains "github". Note that "class" always comes first.
         // "code": "󰨞",
@@ -66,7 +68,7 @@
       "format": "{}",
       "icon": true,
       "icon-size": 24,
-      "max-length": 80,
+      "max-length": 40,
       "separate-outputs": true
     },
     "clock": {
@@ -85,7 +87,7 @@
       "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "wireplumber": {
-      "format": "<span color='#b4befe'>{icon}</span> {volume}%",
+      "format": "<span color='#b4befe'>{icon}</span> {volume}%",
       "format-muted": "",
       "tooltip": false,
       "format-icons": {
@@ -95,10 +97,10 @@
       "scroll-step": 1,
     },
     "bluetooth": {
-      "format": "<span color='#b4befe'></span>{status}",
+      "format": "<span color='#b4befe'></span> {status}",
       "format-disabled": "", // an empty format will hide the module
-      "format-connected": "<span color='#b4befe'></span> {num_connections}",
-      "format-connected-battery": "<span color='#b4befe'></span> {device_battery_percentage}%",
+      "format-connected": "<span color='#b4befe'></span> {num_connections}",
+      "format-connected-battery": "<span color='#b4befe'></span> {device_battery_percentage}%",
       "tooltip-format": "{controller_alias}\t{controller_address}",
       "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
       "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
@@ -110,8 +112,8 @@
       "format": "{ifname}",
       "format-wifi": "<span color='#b4befe'> </span>{essid}",
       "format-disconnected": "<span color='#b4befe'>󰖪 </span>No Network",
-      "format-ethernet": "<span color='#b4befe'>󰈀 </span>{ifname}",
-      "tooltip-format-ethernet": "{ipaddr}/{cidr}\n{bandwidthUpBytes}  {bandwidthDownBytes} ",
+      "format-ethernet": "<span color='#b4befe'>󰈀 </span>{bandwidthUpBytes}  {bandwidthDownBytes} ",
+      "tooltip-format-ethernet": "{ipaddr} on {ifname}",
     },
     "battery": {
       "format": "<span color='#b4befe'>{icon}</span> {capacity}%",
@@ -119,4 +121,27 @@
       "format-charging": "<span color='#b4befe'>󰂄</span> {capacity}%",
       "tooltip": false,
     },
+
+  "privacy": {
+  "icon-spacing": 4,
+  "icon-size": 24,
+  "transition-duration": 250,
+  "modules": [
+    {
+      "type": "screenshare",
+      "tooltip": true,
+      "tooltip-icon-size": 24
+    },
+    {
+      "type": "audio-out",
+      "tooltip": true,
+      "tooltip-icon-size": 24
+    },
+    {
+      "type": "audio-in",
+      "tooltip": true,
+      "tooltip-icon-size": 24
+    }
+  ]
+},
 }

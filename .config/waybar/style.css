@@ -32,7 +32,7 @@ window#waybar {
   color: #b4befe;
 }
 
-#clock, #backlight, #wireplumber, #bluetooth, #network, #battery, #systemd-failed-units, #workspaces, #temperature, #memory, #window, #custom-hyprshot{
+#clock, #backlight, #wireplumber, #bluetooth, #network, #battery, #systemd-failed-units, #workspaces, #temperature, #memory, #window, #custom-hyprshot, #privacy{
   margin-top: 1px;
   border-radius: 10px;
   background-color: #11111b;
@@ -45,6 +45,13 @@ window#waybar {
 
 #workspaces{
   padding-right: 19px;
+}
+
+/* remove window background and paddings when no activie window */
+window#waybar.empty #window {
+  background-color: transparent;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 /*
 #backlight, #bluetooth {
