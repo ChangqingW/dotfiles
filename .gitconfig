@@ -12,3 +12,12 @@
   ff = only
 [alias]
   tree = -c core.pager='less -SRF' log --graph --date-order --date=short --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%cn %C(reset)%C(green)%cr (%cd)'
+  # difft = -c diff.external='difft --display side-by-side-show-both' diff
+  # difft = "!f() { git -c diff.external='difft --display side-by-side-show-both' \"$@\" --ext-diff; }; f"
+  difft = "!f() { \
+    if [ $# -eq 0 ]; then \
+      git -c diff.external='difft --display side-by-side-show-both' diff; \
+    else \
+      git -c diff.external='difft --display side-by-side-show-both' \"$@\" --ext-diff; \
+    fi; \
+    }; f"

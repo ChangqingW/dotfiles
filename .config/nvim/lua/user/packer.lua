@@ -90,7 +90,7 @@ return packer.startup(function(use)
 
   use "tamago324/nlsp-settings.nvim"   -- language server settings defined in json for
   use({
-    "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+    "nvimtools/none-ls.nvim", -- null-ls.nvim Reloaded, maintained by the community.
     requires = { "nvim-lua/plenary.nvim" },
   })
 
@@ -101,7 +101,7 @@ return packer.startup(function(use)
     config = function() require("user.plugin_confs.treesitter") end
   }
   use "JoosepAlviste/nvim-ts-context-commentstring"
-  use "p00f/nvim-ts-rainbow"
+  use "hiphish/rainbow-delimiters.nvim"
   use {
     "windwp/nvim-autopairs",
     config = function() require('user.plugin_confs.autopairs') end
