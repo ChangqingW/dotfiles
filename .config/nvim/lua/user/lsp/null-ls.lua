@@ -53,10 +53,8 @@ local styler = h.make_builtin({
 null_ls.setup({
   debug = false,
   sources = {
-    formatting.autopep8,
     formatting.google_java_format,
     -- formatting.clang_format,
-    formatting.rustfmt,
     styler,
   },
 })
