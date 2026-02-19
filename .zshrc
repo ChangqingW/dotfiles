@@ -6,6 +6,10 @@ if [ -f /etc/profile.d/modules.sh ]; then
   source /etc/profile.d/modules.sh
   module load git
   module load R/flexiblas/4.4.1
+  module load quarto/1.4.554
+  module load curl
+  module load pandoc texlive
+  module load samtools
   module load stornext
   module load ImageMagick/7.1.1
   module load nodejs/20.16.0
@@ -60,6 +64,11 @@ if [[ ! $PATH =~ 'Visual Studio Code.app' ]]; then
     PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
   fi
 fi
+
+# ctrl+w to delete to slash
+# WORDCHARS: characters considered part of a word
+# remove / from WORDCHARS:
+WORDCHARS=${WORDCHARS//[\/]}
 
 # history
 SAVEHIST=10000
@@ -199,6 +208,20 @@ function preexec {
     export $(tmux show-environment | grep "^DISPLAY")
   fi
 }
+
+# Unresolve symlinked path for tmux
+SYMLINK_PATH="$HOME"
+REAL_PATH="/stornext/Home/data/allstaff/w/$USER"
+
+function unresolve_symlinked_path() {
+  if [[ "$PWD" == $REAL_PATH/* ]]; then
+    suffix="${PWD#$REAL_PATH}"   # Remove symlink prefix
+    cd "$SYMLINK_PATH$suffix"
+  fi
+}
+
+# Run once at startup
+unresolve_symlinked_path
 
 # atuin
 # https://github.com/atuinsh/atuin/issues/977
